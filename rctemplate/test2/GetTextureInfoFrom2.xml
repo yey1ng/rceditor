@@ -1,15 +1,15 @@
-<Node NodeName="GetTextureInfoFrom2" TemplateName="" ClassName="GetTextureInfoFrom" IsDynamicConnectionPin="1" IsDynamicInputPin="1" IsDynamicOutputPin="0" IsDynamicParam="1">
+<Node NodeName="GetTextureInfoFrom2" ClassName="GetTextureInfoFrom" IsDynamicInputOutput="true" IsDynamicInput="true" IsDynamicOutput="false" IsDynamicParam="true">
     <NodeGraph NodeType="GPU" Comment=""/>
-    <ConnectionPinList>
-        <Pin Name="refTexture" MetaData = "" PinAccessType="Writable" DataType="Texture"/>
-    </ConnectionPinList>
-    <InputPinList>
-        <Pin Name="format" MetaData = ""  PinAccessType="Readable" DataType="RCFormat"/>
-        <Pin Name="width" MetaData = "" PinAccessType="Readable" DataType="Int"/>
-        <Pin Name="height" MetaData = "" PinAccessType="Readable" DataType="Int"/>
-        <Pin Name="mipLevel" MetaData = "" PinAccessType="Readable" DataType="Int"/>
-        <Pin Name="layerCount" MetaData = "" PinAccessType="Readable" DataType="Int"/>
-    </InputPinList>
-    <OutputPinList>
-    </OutputPinList>
+    <InputOutput>
+        <Pin Name="refTexture" InputMetaData="" OutputMetaData = "" AccessType="Writable" DataType="Texture"/>
+    </InputOutput>
+    <Input>
+        <Pin Name="format" MetaData = ""  AccessType="Readable" DataType="RCFormat"/>
+        <Pin Name="width" MetaData = "" AccessType="Readable" DataType="Int"/>
+        <Pin Name="height" MetaData = "" AccessType="Readable" DataType="Int"/>
+        <Pin Name="mipLevel" MetaData = "" AccessType="Readable" DataType="Int"/>
+        <Pin Name="layerCount" MetaData = "" AccessType="Readable" DataType="Int"/>
+    </Input>
+    <Output>
+    </Output>
 </Node>

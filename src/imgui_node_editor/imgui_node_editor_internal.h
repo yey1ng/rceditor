@@ -602,12 +602,12 @@ struct Settings
     void MakeDirty(SaveReasonFlags reason, Node* node = nullptr);
 
 	void Serialize(const std::string& i_FileName, rceditor::NodeManager* i_pNodeManager);
-    void SerializeEditorInfo(tinyxml2::XMLDocument* i_XMLDocument, tinyxml2::XMLElement* i_XmlElement);
+    void SerializeEditorInfo(tinyxml2::XMLDocument* i_XMLDocument, tinyxml2::XMLElement* i_XmlElement, rceditor::NodeManager* i_pNodeManager);
 	void SerializeLinks(tinyxml2::XMLDocument* i_XMLDocument, tinyxml2::XMLElement* i_XmlElement, rceditor::NodeManager* i_pNodeManager);
 	void SerializeNodes(tinyxml2::XMLDocument* i_XMLDocument, tinyxml2::XMLElement* i_XmlElement, rceditor::NodeManager* i_pNodeManager);
 
     void Parse(const std::string& i_FileName, rceditor::NodeManager* i_pNodeManager);
-	void ParseEditorInfo(tinyxml2::XMLElement* i_RootXMLElement, std::string_view i_XMLElementKey);
+	void ParseEditorInfo(tinyxml2::XMLElement* i_RootXMLElement, std::string_view i_XMLElementKey, rceditor::NodeManager* i_pNodeManager);
 	void ParseLinks(tinyxml2::XMLElement* i_RootXMLElement, std::string_view i_XMLElementKey, rceditor::NodeManager* i_pNodeManager);
 	void ParseNodes(tinyxml2::XMLElement* i_RootXMLElement, std::string_view i_XMLElementKey, rceditor::NodeManager* i_pNodeManager);
 
@@ -1364,7 +1364,7 @@ struct EditorContext
     HintBuilder& GetHintBuilder() { return m_HintBuilder; }
 
     EditorAction* GetCurrentAction() { return m_CurrentAction; }
-
+    NavigateAction& GetNavigateAction() { return m_NavigateAction; }
     CreateItemAction& GetItemCreator() { return m_CreateItemAction; }
     DeleteItemsAction& GetItemDeleter() { return m_DeleteItemsAction; }
     ContextMenuAction& GetContextMenu() { return m_ContextMenuAction; }

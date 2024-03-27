@@ -673,6 +673,7 @@ Packet psincos_float(const Packet& _x)
   // x = pmadd(y, pset1<Packet>(-3.140625/2.), x);
   // x = pmadd(y, pset1<Packet>(-0.00048351287841796875), x);
   // x = pmadd(y, pset1<Packet>(-3.13855707645416259765625e-07), x);
+
   // x = pmadd(y, pset1<Packet>(-6.0771006282767103812147979624569416046142578125e-11), x);
 
   // For the record, with only 3 iterations it is possible to maintain

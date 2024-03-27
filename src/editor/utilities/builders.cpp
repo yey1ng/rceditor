@@ -81,7 +81,7 @@ void util::BlueprintNodeBuilder::End()
 					ImColor(255, 255, 255, 96 * alpha / (3 * 255)), 1.0f);
 			}
 
-			if (NormalMin.y != NormalMax.y)
+			if (!(NormalMin.y == NormalMax.y || TemplateMin.y == TemplateMax.y))
 			{
 				drawList->AddLine(
 					ImVec2(TemplateMin.x - (8 - halfBorderWidth), TemplateMax.y + 2.5f),

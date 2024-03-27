@@ -1,0 +1,7 @@
+<Node NodeName="CommandBuffer" ClassName="" IsDynamicInputOutput="false" IsDynamicInput="true" IsDynamicOutput="true" IsDynamicParam="true">
+    <NodeGraph NodeType="Task" Comment=""/>
+    <ParamList>
+        <Param Name="Queue" DataType="TaskQueueFamily" Data="Compute" UseRef="false" RefKey=""/>
+        <Param Name="QueueIndex" DataType="Int" Data="0" UseRef="false" RefKey=""/>
+    </ParamList>
+</Node>

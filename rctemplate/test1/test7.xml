@@ -1,0 +1,17 @@
+<Node NodeName="test7" TemplateName="GetTextureInfoFrom11">
+    <NodeGraph Comment=""/>
+    <InputOutput>
+        <Pin Name="TempPin3" InputMetaData="" OutputMetaData="" DataType="Int" AccessType="Readable"/>
+    </InputOutput>
+    <Input>
+        <Pin Name="TempPin2" MetaData="" DataType="Int" AccessType="Readable"/>
+        <Pin Name="TempPin4" MetaData="" DataType="Int" AccessType="Readable"/>
+    </Input>
+    <Output>
+        <Pin Name="TempPin1" MetaData="" DataType="Int" AccessType="Readable"/>
+    </Output>
+    <ParamList>
+        <Param Name="TempParam1" DataType="Int" Data="0" UseRef="false" RefKey=""/>
+        <Param Name="TempParam" DataType="Matrix4" Data="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" UseRef="false" RefKey=""/>
+    </ParamList>
+</Node>

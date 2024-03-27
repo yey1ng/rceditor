@@ -1,0 +1,14 @@
+<Node NodeName="SaveNodeTest" TemplateName="1111111111">
+    <NodeGraph Comment="12314123"/>
+    <InputOutput>
+        <Pin Name="TempPin7" InputMetaData="" OutputMetaData="" DataType="Int" AccessType="Readable"/>
+    </InputOutput>
+    <Input/>
+    <Output>
+        <Pin Name="TempPin1" MetaData="" DataType="Int" AccessType="Readable"/>
+        <Pin Name="TempPin2" MetaData="123" DataType="WString" AccessType="Readable"/>
+    </Output>
+    <ParamList>
+        <Param Name="TempParam4" DataType="Int" Data="333" UseRef="false" RefKey=""/>
+    </ParamList>
+</Node>

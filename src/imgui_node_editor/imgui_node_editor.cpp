@@ -1981,14 +1981,14 @@ void ed::EditorContext::SaveData(rceditor::NodeManager* i_pNodeManager)
 		m_Settings.m_Nodes.emplace_back(l_NodeSetting);
 	}
 
-	m_Settings.m_Links.clear();
-	for (auto& l_Link : m_Links)
-	{
-		const rceditor::U64 l_LinkID = l_Link.m_ID.AsU64();
-		const rceditor::U64 l_StartID = l_Link->m_StartPin->m_ID.AsU64();
-		const rceditor::U64 l_EndID = l_Link->m_EndPin->m_ID.AsU64();
-		m_Settings.m_Links.emplace_back(l_LinkID, l_StartID, l_EndID);
-	}
+	//m_Settings.m_Links.clear();
+	//for (auto& l_Link : m_Links)
+	//{
+	//	const rceditor::U64 l_LinkID = l_Link.m_ID.AsU64();
+	//	const rceditor::U64 l_StartID = l_Link->m_StartPin->m_ID.AsU64();
+	//	const rceditor::U64 l_EndID = l_Link->m_EndPin->m_ID.AsU64();
+	//	m_Settings.m_Links.emplace_back(l_LinkID, l_StartID, l_EndID);
+	//}
 
 	m_Settings.m_Selection.clear();
 	for (auto& object : m_SelectedObjects)
@@ -2021,81 +2021,14 @@ void ed::EditorContext::LoadData(rceditor::NodeManager* i_pNodeManager)
 	{
 		m_NavigateAction.NavigateTo(m_Settings.m_VisibleRect, NavigateAction::ZoomMode::Exact, 0.0f);
 	}
+
+    m_Nodes.clear();
+    m_Links.clear();
+    for (auto& l_Node : m_Settings.m_Nodes)
+        CreateNode(l_Node.m_ID);
+    //for (auto& l_Link : m_Settings.m_Links)
+    //    CreateLink(l_Link.m_ID);
 }
-
-
-//void ed::EditorContext::SaveData(const std::map<rceditor::U64, rceditor::NodeInfo>& i_Nodes, const std::map<rceditor::U64, rceditor::LinkInfo>& i_Links)
-//{
-//	m_Config.BeginSave();
-//
-//	std::cout << m_Nodes.size() << std::endl;
-//
-//	for (auto& l_Node : m_Nodes)
-//	{
-//		const auto settings = m_Settings.FindNode(l_Node->m_ID);
-//		settings->m_Location = l_Node->m_Bounds.Min;
-//		settings->m_Size = l_Node->m_Bounds.GetSize();
-//		if (IsGroup(l_Node))
-//			settings->m_GroupSize = l_Node->m_GroupBounds.GetSize();
-//
-//		rceditor::U64 l_ID = l_Node->m_ID.AsU64();
-//		settings->m_NodeInfo = i_Nodes.at(l_ID);
-//	}
-//
-//	m_Settings.m_Links.clear();
-//
-//	for (auto& l_Link : i_Links)
-//	{
-//		auto [l_LinkID, l_StartNodeID, l_EndNodeID, l_Color] = i_Links.at(l_Link.first);
-//		LinkSettings l_Settings(l_LinkID, l_StartNodeID, l_EndNodeID);
-//		m_Settings.m_Links.emplace_back(l_Settings);
-//	}
-//
-//	m_Settings.m_Selection.resize(0);
-//	for (auto& object : m_SelectedObjects)
-//		m_Settings.m_Selection.push_back(object->ID());
-//
-//	m_Settings.m_ViewScroll = m_NavigateAction.m_Scroll;
-//	m_Settings.m_ViewZoom = m_NavigateAction.m_Zoom;
-//	m_Settings.m_VisibleRect = m_NavigateAction.m_VisibleRect;
-//
-//	if (m_Config.Save(m_Settings.Serialize(), m_Settings.m_DirtyReason))
-//		m_Settings.ClearDirty();
-//
-//	m_Config.EndSave();
-//}
-//
-//void ed::EditorContext::LoadData(std::map<rceditor::U64, rceditor::NodeInfo>& o_Nodes, std::map<rceditor::U64, rceditor::LinkInfo>& o_Links)
-//{
-//	m_Settings.m_Nodes.clear();
-//	m_Settings.m_Links.clear();
-//	ed::Settings::Parse(m_Config.Load(), m_Settings);
-//
-//	if (ImRect_IsEmpty(m_Settings.m_VisibleRect))
-//	{
-//		m_NavigateAction.m_Scroll = m_Settings.m_ViewScroll;
-//		m_NavigateAction.m_Zoom = m_Settings.m_ViewZoom;
-//	}
-//	else
-//	{
-//		m_NavigateAction.NavigateTo(m_Settings.m_VisibleRect, NavigateAction::ZoomMode::Exact, 0.0f);
-//	}
-//
-//	for (const auto& l_NodeSettings : m_Settings.m_Nodes)
-//	{
-//		rceditor::U64 l_ID = l_NodeSettings.m_ID.Get();
-//		o_Nodes[l_ID] = l_NodeSettings.m_NodeInfo;
-//	}
-//
-//	for (const auto& l_LinkSettings : m_Settings.m_Links)
-//	{
-//		rceditor::LinkInfo l_LinkInfo;
-//		l_LinkInfo.m_ID = l_LinkSettings.m_ID.Get();
-//		l_LinkInfo.m_StartPinID = l_LinkSettings.m_StartPinID.Get();
-//		l_LinkInfo.m_EndPinID = l_LinkSettings.m_EndPinID.Get();
-//		o_Links.emplace(l_LinkInfo.m_ID, l_LinkInfo);
-//	}
-//}
 
 void ed::EditorContext::MakeDirty(SaveReasonFlags reason)
 {
@@ -2793,7 +2726,7 @@ void ed::Settings::Serialize(const std::string& i_FileName, rceditor::NodeManage
 	tinyxml2::XMLDeclaration* l_Declaration = l_Document.NewDeclaration("xml version='1.0' encoding='utf-8' standalone='yes'");
 	tinyxml2::XMLElement* l_RCDataRoot = l_Document.NewElement("RCData");
 
-	SerializeEditorInfo(&l_Document, l_RCDataRoot);
+	SerializeEditorInfo(&l_Document, l_RCDataRoot, i_pNodeManager);
 	SerializeLinks(&l_Document, l_RCDataRoot, i_pNodeManager);
 	SerializeNodes(&l_Document, l_RCDataRoot, i_pNodeManager);
 
@@ -2804,7 +2737,7 @@ void ed::Settings::Serialize(const std::string& i_FileName, rceditor::NodeManage
 	return;
 }
 
-void ed::Settings::SerializeEditorInfo(tinyxml2::XMLDocument* i_XMLDocument, tinyxml2::XMLElement* i_XmlElement)
+void ed::Settings::SerializeEditorInfo(tinyxml2::XMLDocument* i_XMLDocument, tinyxml2::XMLElement* i_XmlElement, rceditor::NodeManager* i_pNodeManager)
 {
 	tinyxml2::XMLElement* l_XmlEditorInfo = i_XMLDocument->NewElement("EditorInfo");
 
@@ -2815,156 +2748,219 @@ void ed::Settings::SerializeEditorInfo(tinyxml2::XMLDocument* i_XMLDocument, tin
 	l_XmlEditorInfo->SetAttribute("VisibleRectMinY", m_VisibleRect.Min.y);
 	l_XmlEditorInfo->SetAttribute("VisibleRectMaxX", m_VisibleRect.Max.x);
 	l_XmlEditorInfo->SetAttribute("VisibleRectMaxY", m_VisibleRect.Max.y);
+    l_XmlEditorInfo->SetAttribute("CurNodeID", i_pNodeManager->getNodeID());
 
 	i_XmlElement->InsertEndChild(l_XmlEditorInfo);
 }
 
+struct LinkFoldInfo
+{
+    std::string m_PinName = {};
+    std::vector<rceditor::LinkInfo> m_FoldLinkList;
+};
+
+bool foldLink(std::shared_ptr<rceditor::NodeInfo> i_NodeInfo, std::map<rceditor::NodeID, LinkFoldInfo> i_LinkFoldInfo)
+{
+    if (i_NodeInfo->getNodeType() == rceditor::NodeType::CPU || i_NodeInfo->getNodeType() == rceditor::NodeType::GPU)
+        return false;
+
+    rceditor::NodeID l_NodeID = i_NodeInfo->getNodeID();
+    if (i_LinkFoldInfo.find(l_NodeID) == i_LinkFoldInfo.end())
+        return false;
+
+    return true;
+}
+
 void ed::Settings::SerializeLinks(tinyxml2::XMLDocument* i_XMLDocument, tinyxml2::XMLElement* i_XmlElement, rceditor::NodeManager* i_pNodeManager)
 {
+    auto savePinInfo = [&i_XMLDocument, &i_pNodeManager](tinyxml2::XMLElement* l_XmlElementLink, std::string_view i_Name, const rceditor::PinID i_PinID) {
+        const auto& l_pPinInfo = i_pNodeManager->pinInfo(i_PinID);
+        tinyxml2::XMLElement* l_XmlElement = i_XMLDocument->NewElement(i_Name.data());
+		l_XmlElement->SetAttribute("NodeID", l_pPinInfo->getNodeID());
+		l_XmlElement->SetAttribute("PinName", l_pPinInfo->getName().c_str());
+        l_XmlElementLink->InsertEndChild(l_XmlElement);
+    };
+
+	auto saveNormalInfo = [&i_XMLDocument, &savePinInfo](tinyxml2::XMLElement* l_XmlElementLinkList, std::string_view i_XmlKey, const rceditor::LinkInfo& i_LinkInfo) -> tinyxml2::XMLElement* {
+		tinyxml2::XMLElement* l_XmlElementLink = i_XMLDocument->NewElement(i_XmlKey.data());
+		savePinInfo(l_XmlElementLink, "OutputInfo", i_LinkInfo.m_OutputPinID);
+		savePinInfo(l_XmlElementLink, "InputInfo", i_LinkInfo.m_InputPinID);
+		l_XmlElementLinkList->InsertEndChild(l_XmlElementLink);
+        return l_XmlElementLink;
+	};
+
+    auto saveFlodLinkInfo = [&i_XMLDocument, &saveNormalInfo](tinyxml2::XMLElement* l_XmlElementLinkList, const rceditor::RealLinkInfo& i_RealLinkInfo) {
+        rceditor::LinkInfo l_RealLinkInfo{};
+        l_RealLinkInfo.m_OutputPinID = i_RealLinkInfo.m_LinkInfoList.begin()->m_OutputPinID;
+        l_RealLinkInfo.m_InputPinID = (i_RealLinkInfo.m_LinkInfoList.end() - 1)->m_InputPinID;
+        tinyxml2::XMLElement* l_XmlElementLink = saveNormalInfo(l_XmlElementLinkList, "Link", l_RealLinkInfo);
+
+        //Save Graph Link
+        if (i_RealLinkInfo.m_LinkInfoList.size() > 1)
+        {
+            tinyxml2::XMLElement* l_XmlElementGraphLinkList = i_XMLDocument->NewElement("GraphLinkList");
+            for (auto& l_LinkInfo : i_RealLinkInfo.m_LinkInfoList)
+            {
+                saveNormalInfo(l_XmlElementGraphLinkList, "GraphLink", l_LinkInfo);
+            }
+            l_XmlElementLink->InsertEndChild(l_XmlElementGraphLinkList);
+        }
+    };
+
 	tinyxml2::XMLElement* l_XmlLinkList = i_XMLDocument->NewElement("LinkList");
-	l_XmlLinkList->SetAttribute("LinkSize", m_Links.size());
-	for (auto& l_Link : m_Links)
-	{
-		tinyxml2::XMLElement* l_XmlLink = i_XMLDocument->NewElement("Link");
-		auto& l_pLinkInfo = i_pNodeManager->linkInfo(l_Link.m_ID.AsU64());
-		if (!l_pLinkInfo) continue;
-
-		const auto& l_pOutputNodeInfo = i_pNodeManager->nodeInfo(l_pLinkInfo->m_OutputNodeID);
-		const auto& l_pInputNodeInfo = i_pNodeManager->nodeInfo(l_pLinkInfo->m_InputNodeID);
-		const auto& l_pOutputPinInfo = i_pNodeManager->pinInfo(l_pLinkInfo->m_OutputPinID);
-		const auto& l_pInputPinInfo = i_pNodeManager->pinInfo(l_pLinkInfo->m_InputPinID);
-		if (!(l_pOutputNodeInfo && l_pInputNodeInfo && l_pOutputPinInfo && l_pInputPinInfo)) continue;
-
-		auto getPinIndex = [&](const std::shared_ptr<rceditor::NodeInfo>& i_pNodeInfo, rceditor::PinID i_pPinID, const std::shared_ptr<rceditor::PinInfo>& i_pPinInfo) -> auto {
-			const auto& l_PinIDList = i_pNodeInfo->getPinIDList(i_pPinInfo);
-
-			auto l_It = std::find(l_PinIDList.begin(), l_PinIDList.end(), i_pPinID);
-			if (l_It != l_PinIDList.end())
-				return static_cast<int>(l_It - l_PinIDList.begin());
-
-			return -1;
-			};
-
-		auto l_OutputPinIndex = getPinIndex(l_pOutputNodeInfo, l_pLinkInfo->m_OutputPinID, l_pOutputPinInfo);
-		auto l_InputPinIndex = getPinIndex(l_pInputNodeInfo, l_pLinkInfo->m_InputPinID, l_pInputPinInfo);
-		if ((l_OutputPinIndex >= 0) && (l_InputPinIndex >= 0))
-		{
-			tinyxml2::XMLElement* l_XmlOutputInfo = i_XMLDocument->NewElement("OutputInfo");
-			l_XmlOutputInfo->SetAttribute("NodeGUID", l_pOutputNodeInfo->m_GUID.c_str());
-			l_XmlOutputInfo->SetAttribute("PinIndex", l_OutputPinIndex);
-			l_XmlOutputInfo->SetAttribute("IsTemplate", l_pOutputPinInfo->m_IsTemplate);
-			l_XmlOutputInfo->SetAttribute("IsConnection", l_pOutputPinInfo->m_IsConnection);
-			l_XmlOutputInfo->SetAttribute("PinType", l_pOutputPinInfo->m_PinType.enumValueStr().c_str());
-			l_XmlLink->InsertEndChild(l_XmlOutputInfo);
-
-			tinyxml2::XMLElement* l_XmlInputInfo = i_XMLDocument->NewElement("InputInfo");
-			l_XmlInputInfo->SetAttribute("NodeGUID", l_pInputNodeInfo->m_GUID.c_str());
-			l_XmlInputInfo->SetAttribute("PinIndex", l_InputPinIndex);
-			l_XmlInputInfo->SetAttribute("IsTemplate", l_pInputPinInfo->m_IsTemplate);
-			l_XmlInputInfo->SetAttribute("IsConnection", l_pInputPinInfo->m_IsConnection);
-			l_XmlInputInfo->SetAttribute("PinType", l_pInputPinInfo->m_PinType.enumValueStr().c_str());
-			l_XmlLink->InsertEndChild(l_XmlInputInfo);
-		}
-		l_XmlLinkList->InsertEndChild(l_XmlLink);
-	}
-
-	i_XmlElement->InsertEndChild(l_XmlLinkList);
+    auto l_LinkFlodInfoList = i_pNodeManager->getFlodLinkInfo();
+    for (auto l_LinkFlodInfo : l_LinkFlodInfoList)
+        saveFlodLinkInfo(l_XmlLinkList, l_LinkFlodInfo);
+    i_XmlElement->InsertEndChild(l_XmlLinkList);
 }
+
+struct TempParentNodeInfo
+{
+    
+};
 
 void ed::Settings::SerializeNodes(tinyxml2::XMLDocument* i_XMLDocument, tinyxml2::XMLElement* i_XmlElement, rceditor::NodeManager* i_pNodeManager)
 {
+  //  auto findNodeSetting = [this](NodeId i_Id) -> NodeSettings* {
+		//auto l_Start = m_Nodes.data();
+		//auto l_End = m_Nodes.data() + m_Nodes.size();
+		//for (auto l_It = l_Start; l_It < l_End; ++l_It)
+		//	if (l_It->m_ID == i_Id)
+		//		return l_It;
+
+  //      return nullptr;
+  //  };
+
 	tinyxml2::XMLElement* l_XmlList = i_XMLDocument->NewElement("NodeList");
 	tinyxml2::XMLElement* l_XmlNoUseList{};
 
-	rceditor::U32 l_UseNode = 0;
-	rceditor::U32 l_UnuseNode = 0;
-	for (auto& l_Node : m_Nodes)
-	{
-		auto& l_pNodeInfo = i_pNodeManager->nodeInfo(l_Node.m_ID.AsU64());
-		if (!l_pNodeInfo) continue;
+    for (auto& l_It : i_pNodeManager->nodeMap())
+    {
+        auto l_pNodeInfo = l_It.second;
+        if (!l_pNodeInfo) continue;
+        auto l_pEditorNode = FindNode(l_pNodeInfo->getNodeID());
+        if (!l_pEditorNode) continue;
 
-		tinyxml2::XMLElement* l_XmlNodeListCur = l_XmlList;
-		if (true)
-		{
-			l_UseNode++;
-		}
-		else
-		{
-			if (l_XmlNoUseList == nullptr)
-				l_XmlNoUseList = i_XMLDocument->NewElement("NodeNoUseList");
-			l_XmlNodeListCur = l_XmlNoUseList;
-			l_UnuseNode++;
-		}
+        NodeSettings* l_pStartNodeInfo{};
+        NodeSettings* l_pEndNodeInfo{};
+        if (l_pNodeInfo->getNodeType() == rceditor::NodeType::Task) {
+            auto l_pTaskNodeInfo = std::dynamic_pointer_cast<rceditor::TaskNodeInfo>(l_pNodeInfo);
+            l_pStartNodeInfo = FindNode(l_pTaskNodeInfo->getStartChildNodeID());
+            l_pEndNodeInfo = FindNode(l_pTaskNodeInfo->getEndChildNodeID());
+        }
+        else if (l_pNodeInfo->getNodeType() == rceditor::NodeType::Composite) {
+            auto l_pCompositeNodeInfo = std::dynamic_pointer_cast<rceditor::CompositeNodeInfo>(l_pNodeInfo);
+            l_pStartNodeInfo = FindNode(l_pCompositeNodeInfo->getStartChildNodeID());
+            l_pEndNodeInfo = FindNode(l_pCompositeNodeInfo->getEndChildNodeID());
+        }
+        else if ((l_pNodeInfo->getNodeType() == rceditor::NodeType::Start || l_pNodeInfo->getNodeType() == rceditor::NodeType::End))
+            continue;
 
-		tinyxml2::XMLElement* l_XmlNode = i_XMLDocument->NewElement("Node");
-		l_XmlNode->SetAttribute("GUID", l_pNodeInfo->m_GUID.c_str());
-		l_XmlNode->SetAttribute("TemplateName", l_pNodeInfo->m_TemplateName.c_str());
+        auto l_XmlNodeGraph = l_pNodeInfo->saveData(i_XMLDocument, l_XmlList, i_pNodeManager);
+        l_XmlNodeGraph->SetAttribute("LocationX", l_pEditorNode->m_Location.x);
+        l_XmlNodeGraph->SetAttribute("LocationY", l_pEditorNode->m_Location.y);
+        l_XmlNodeGraph->SetAttribute("GroupSizeX", l_pEditorNode->m_GroupSize.x);
+        l_XmlNodeGraph->SetAttribute("GroupSizeY", l_pEditorNode->m_GroupSize.y);
 
-		tinyxml2::XMLElement* l_XmlNodeGraph = i_XMLDocument->NewElement("NodeGraph");
-		l_XmlNodeGraph->SetAttribute("NodeName", l_pNodeInfo->m_Name.c_str());
-		l_XmlNodeGraph->SetAttribute("NodeType", l_pNodeInfo->m_Type.enumValueStr().c_str());
-		l_XmlNodeGraph->SetAttribute("Comment", l_pNodeInfo->m_Comment.c_str());
-		l_XmlNodeGraph->SetAttribute("LocationX", l_Node.m_Location.x);
-		l_XmlNodeGraph->SetAttribute("LocationY", l_Node.m_Location.y);
-		l_XmlNodeGraph->SetAttribute("GroupSizeX", l_Node.m_GroupSize.x);
-		l_XmlNodeGraph->SetAttribute("GroupSizeY", l_Node.m_GroupSize.y);
+        auto l_XmlStartNode = l_XmlNodeGraph->FirstChildElement("StartNode");
+        auto l_XmlEndNode = l_XmlNodeGraph->FirstChildElement("EndNode");
+        if (l_pStartNodeInfo && l_pEndNodeInfo && l_XmlStartNode && l_XmlEndNode)
+        {
+            l_XmlStartNode->SetAttribute("LocationX", l_pStartNodeInfo->m_Location.x);
+            l_XmlStartNode->SetAttribute("LocationY", l_pStartNodeInfo->m_Location.y);
+            l_XmlStartNode->SetAttribute("GroupSizeX", l_pStartNodeInfo->m_GroupSize.x);
+            l_XmlStartNode->SetAttribute("GroupSizeY", l_pStartNodeInfo->m_GroupSize.y);
 
-		l_XmlNode->InsertEndChild(l_XmlNodeGraph);
+            l_XmlEndNode->SetAttribute("LocationX", l_pEndNodeInfo->m_Location.x);
+            l_XmlEndNode->SetAttribute("LocationY", l_pEndNodeInfo->m_Location.y);
+            l_XmlEndNode->SetAttribute("GroupSizeX", l_pEndNodeInfo->m_GroupSize.x);
+            l_XmlEndNode->SetAttribute("GroupSizeY", l_pEndNodeInfo->m_GroupSize.y);
+        }
+    }
 
-		auto l_SavePinInfo = [&](const std::string& i_ElementStr, const std::vector<rceditor::PinID>& i_PinIDList) -> void {
-			//if (i_PinIDList.size() == 0) return;
+    i_XmlElement->InsertEndChild(l_XmlList);
+	//	tinyxml2::XMLElement* l_XmlNodeListCur = l_XmlList;
+	//	//if (true)
+	//	//{
+	//	//	l_UseNode++;
+	//	//}
+	//	//else
+	//	//{
+	//	//	if (l_XmlNoUseList == nullptr)
+	//	//		l_XmlNoUseList = i_XMLDocument->NewElement("NodeNoUseList");
+	//	//	l_XmlNodeListCur = l_XmlNoUseList;
+	//	//	l_UnuseNode++;
+	//	//}
 
-			tinyxml2::XMLElement* l_XMLPinListElement = i_XMLDocument->NewElement(i_ElementStr.c_str());
-			for (const auto& l_PinID : i_PinIDList)
-			{
-				const auto& l_pPinInfo = i_pNodeManager->pinInfo(l_PinID);
-				if (!l_pPinInfo) continue;
+	//	tinyxml2::XMLElement* l_XmlNode = i_XMLDocument->NewElement("Node");
+	//	l_XmlNode->SetAttribute("GUID", l_pNodeInfo->m_GUID.c_str());
+	//	l_XmlNode->SetAttribute("TemplateName", l_pNodeInfo->m_TemplateName.c_str());
 
-				tinyxml2::XMLElement* l_XmlPinElement = i_XMLDocument->NewElement("Pin");
-				l_XmlPinElement->SetAttribute("Name", l_pPinInfo->m_Name.c_str());
-				l_XmlPinElement->SetAttribute("MetaData", l_pPinInfo->m_MetaData.c_str());
-				l_XmlPinElement->SetAttribute("DataType", l_pPinInfo->m_DataType.enumValueStr().c_str());
-				l_XmlPinElement->SetAttribute("AccessType", l_pPinInfo->m_PinAccessType.enumValueStr().c_str());
-				l_XMLPinListElement->InsertEndChild(l_XmlPinElement);
-			}
+	//	tinyxml2::XMLElement* l_XmlNodeGraph = i_XMLDocument->NewElement("NodeGraph");
+	//	l_XmlNodeGraph->SetAttribute("NodeName", l_pNodeInfo->m_Name.c_str());
+	//	l_XmlNodeGraph->SetAttribute("NodeType", l_pNodeInfo->m_Type.enumValueStr().c_str());
+	//	l_XmlNodeGraph->SetAttribute("Comment", l_pNodeInfo->m_Comment.c_str());
+	//	l_XmlNodeGraph->SetAttribute("LocationX", l_Node.m_Location.x);
+	//	l_XmlNodeGraph->SetAttribute("LocationY", l_Node.m_Location.y);
+	//	l_XmlNodeGraph->SetAttribute("GroupSizeX", l_Node.m_GroupSize.x);
+	//	l_XmlNodeGraph->SetAttribute("GroupSizeY", l_Node.m_GroupSize.y);
 
-			l_XmlNode->InsertEndChild(l_XMLPinListElement);
-			};
+	//	l_XmlNode->InsertEndChild(l_XmlNodeGraph);
 
-		auto l_SaveParamInfo = [&](const std::string& i_ElementStr, const std::vector<rceditor::EditorParamInfo>& i_ParamInfoList) -> void {
-			//if (i_ParamInfoList.size() == 0) return;
+	//	auto l_SavePinInfo = [&](const std::string& i_ElementStr, const std::vector<rceditor::PinID>& i_PinIDList) -> void {
+	//		//if (i_PinIDList.size() == 0) return;
 
-			tinyxml2::XMLElement* l_XMLParamListElement = i_XMLDocument->NewElement(i_ElementStr.c_str());
-			for (auto& l_ParamInfo : i_ParamInfoList)
-			{
-				tinyxml2::XMLElement* l_XmlParamElement = i_XMLDocument->NewElement("Param");
-				l_XmlParamElement->SetAttribute("Name", l_ParamInfo.m_Name.c_str());
-				l_XmlParamElement->SetAttribute("MetaData", l_ParamInfo.m_DataType.enumValueStr().c_str());
-				l_XmlParamElement->SetAttribute("Data", l_ParamInfo.m_Data.getData(l_ParamInfo.m_DataType).c_str());
-				l_XmlParamElement->SetAttribute("UseRef", l_ParamInfo.m_UseRef);
-				l_XmlParamElement->SetAttribute("RefKey", l_ParamInfo.m_RefKey.c_str());
-				l_XMLParamListElement->InsertEndChild(l_XmlParamElement);
-			}
+	//		tinyxml2::XMLElement* l_XMLPinListElement = i_XMLDocument->NewElement(i_ElementStr.c_str());
+	//		for (const auto& l_PinID : i_PinIDList)
+	//		{
+	//			const auto& l_pPinInfo = i_pNodeManager->pinInfo(l_PinID);
+	//			if (!l_pPinInfo) continue;
 
-			l_XmlNode->InsertEndChild(l_XMLParamListElement);
-			};
+	//			tinyxml2::XMLElement* l_XmlPinElement = i_XMLDocument->NewElement("Pin");
+	//			l_XmlPinElement->SetAttribute("Name", l_pPinInfo->m_Name.c_str());
+	//			l_XmlPinElement->SetAttribute("MetaData", l_pPinInfo->m_MetaData.c_str());
+	//			l_XmlPinElement->SetAttribute("DataType", l_pPinInfo->m_DataType.enumValueStr().c_str());
+	//			l_XmlPinElement->SetAttribute("AccessType", l_pPinInfo->m_PinAccessType.enumValueStr().c_str());
+	//			l_XMLPinListElement->InsertEndChild(l_XmlPinElement);
+	//		}
 
-		l_SavePinInfo("ConnectionPinList", l_pNodeInfo->m_ConnectionOutputPinIDs);
-		l_SavePinInfo("InputPinList", l_pNodeInfo->m_InputPinIDs);
-		l_SavePinInfo("OutputPinList", l_pNodeInfo->m_OutputPinIDs);
+	//		l_XmlNode->InsertEndChild(l_XMLPinListElement);
+	//		};
 
-		// Save ParamInfo
-		l_SaveParamInfo("ParamList", l_pNodeInfo->m_Params);
+	//	auto l_SaveParamInfo = [&](const std::string& i_ElementStr, const std::vector<rceditor::EditorParamInfo>& i_ParamInfoList) -> void {
+	//		//if (i_ParamInfoList.size() == 0) return;
 
-		l_XmlNodeListCur->InsertEndChild(l_XmlNode);
-	}
-	l_XmlList->SetAttribute("NodeSize", l_UseNode);
-	i_XmlElement->InsertEndChild(l_XmlList);
-	if (l_XmlNoUseList)
-	{
-		l_XmlNoUseList->SetAttribute("NodeSize", l_UnuseNode);
-		i_XmlElement->InsertEndChild(l_XmlNoUseList);
-	}
+	//		tinyxml2::XMLElement* l_XMLParamListElement = i_XMLDocument->NewElement(i_ElementStr.c_str());
+	//		for (auto& l_ParamInfo : i_ParamInfoList)
+	//		{
+	//			tinyxml2::XMLElement* l_XmlParamElement = i_XMLDocument->NewElement("Param");
+	//			l_XmlParamElement->SetAttribute("Name", l_ParamInfo.m_Name.c_str());
+	//			l_XmlParamElement->SetAttribute("MetaData", l_ParamInfo.m_DataType.enumValueStr().c_str());
+	//			l_XmlParamElement->SetAttribute("Data", l_ParamInfo.m_Data.getData(l_ParamInfo.m_DataType).c_str());
+	//			l_XmlParamElement->SetAttribute("UseRef", l_ParamInfo.m_UseRef);
+	//			l_XmlParamElement->SetAttribute("RefKey", l_ParamInfo.m_RefKey.c_str());
+	//			l_XMLParamListElement->InsertEndChild(l_XmlParamElement);
+	//		}
+
+	//		l_XmlNode->InsertEndChild(l_XMLParamListElement);
+	//		};
+
+	//	l_SavePinInfo("ConnectionPinList", l_pNodeInfo->m_ConnectionOutputPinIDs);
+	//	l_SavePinInfo("Input", l_pNodeInfo->m_InputPinIDs);
+	//	l_SavePinInfo("Output", l_pNodeInfo->m_OutputPinIDs);
+
+	//	// Save ParamInfo
+	//	l_SaveParamInfo("ParamList", l_pNodeInfo->m_Params);
+
+	//	l_XmlNodeListCur->InsertEndChild(l_XmlNode);
+	//}
+	//l_XmlList->SetAttribute("NodeSize", l_UseNode);
+	//i_XmlElement->InsertEndChild(l_XmlList);
+	//if (l_XmlNoUseList)
+	//{
+	//	l_XmlNoUseList->SetAttribute("NodeSize", l_UnuseNode);
+	//	i_XmlElement->InsertEndChild(l_XmlNoUseList);
+	//}
 }
 
 void ed::Settings::Parse(const std::string& i_FileName, rceditor::NodeManager* i_pNodeManager)
@@ -2976,12 +2972,12 @@ void ed::Settings::Parse(const std::string& i_FileName, rceditor::NodeManager* i
     tinyxml2::XMLElement* l_RootElement = l_DocXML.RootElement();
 
     tinyxml2::XMLElement* l_EditorInfo = l_RootElement->FirstChildElement("EditorInfo");
-    ParseEditorInfo(l_RootElement, "EditorInfo");
+    ParseEditorInfo(l_RootElement, "EditorInfo", i_pNodeManager);
     ParseNodes(l_RootElement, "NodeList", i_pNodeManager);
     ParseLinks(l_RootElement, "LinkList", i_pNodeManager);
 }
 
-void ed::Settings::ParseEditorInfo(tinyxml2::XMLElement* i_RootXMLElement, std::string_view i_XMLElementKey)
+void ed::Settings::ParseEditorInfo(tinyxml2::XMLElement* i_RootXMLElement, std::string_view i_XMLElementKey, rceditor::NodeManager* i_pNodeManager)
 {
     tinyxml2::XMLElement* l_XMLElement = i_RootXMLElement->FirstChildElement(i_XMLElementKey.data());
 
@@ -2992,167 +2988,117 @@ void ed::Settings::ParseEditorInfo(tinyxml2::XMLElement* i_RootXMLElement, std::
     m_VisibleRect.Min.y = l_XMLElement->FindAttribute("VisibleRectMinY")->FloatValue();
     m_VisibleRect.Max.x = l_XMLElement->FindAttribute("VisibleRectMaxX")->FloatValue();
     m_VisibleRect.Max.y = l_XMLElement->FindAttribute("VisibleRectMaxY")->FloatValue();
+
+    i_pNodeManager->loadNodeID(static_cast<rceditor::NodeID>(l_XMLElement->FindAttribute("CurNodeID")->Int64Value()));
 }
 
 void ed::Settings::ParseLinks(tinyxml2::XMLElement* i_RootXMLElement, std::string_view i_XMLElementKey, rceditor::NodeManager* i_pNodeManager)
 {
     tinyxml2::XMLElement* l_LinkListXMLElement = i_RootXMLElement->FirstChildElement(i_XMLElementKey.data());
 
-    auto ParseLinkInfo = [&i_pNodeManager, this](tinyxml2::XMLElement* i_LinkXMLElement, std::string_view i_LinkTypeKey) -> rceditor::PinID {
-        tinyxml2::XMLElement* l_XMLElement = i_LinkXMLElement->FirstChildElement(i_LinkTypeKey.data());
+    auto parseLinkInfo = [&i_pNodeManager, this](tinyxml2::XMLElement* i_LinkXMLElement, std::string_view i_LinkTypeKey) -> rceditor::PinID {
+        tinyxml2::XMLElement* l_XmlElement = i_LinkXMLElement->FirstChildElement(i_LinkTypeKey.data());
 
-        auto [l_NodeID, l_pNodeInfo] = i_pNodeManager->findNodeByGUID(l_XMLElement->FindAttribute("NodeGUID")->Value());
-        auto l_PinIndex = l_XMLElement->FindAttribute("PinIndex")->IntValue();
-        auto l_IsTemplate = l_XMLElement->FindAttribute("IsTemplate")->BoolValue();
-        auto l_IsConnection = l_XMLElement->FindAttribute("IsConnection")->BoolValue();
-        rceditor::EnumType l_PinType = {};
-        l_PinType.setEnumName("PinType");
-        l_PinType.setEnumValue(l_XMLElement->FindAttribute("PinType")->Value());
+        rceditor::NodeID l_NodeID = l_XmlElement->FindAttribute("NodeID")->Int64Value();
+        std::string l_PinName = l_XmlElement->FindAttribute("PinName")->Value();
+        auto l_pNodeInfo = i_pNodeManager->nodeInfo(l_NodeID);
+        if (!l_pNodeInfo) return 0;
 
-        auto l_PinList = l_pNodeInfo->getPinIDList(l_IsTemplate, l_IsConnection, l_PinType);
-        auto l_PinID = l_PinList[l_PinIndex];
-        auto l_pPinInfo = i_pNodeManager->pinInfo(l_PinID);
-        return l_PinID;
+        auto [l_OutputPinID, l_InputPinID] = l_pNodeInfo->getNameKey(l_PinName);
+        if (i_LinkTypeKey == "OutputInfo")
+            return l_OutputPinID;
+        else if (i_LinkTypeKey == "InputInfo")
+            return l_InputPinID;
+        
+        return 0;
+    };
 
-		////Setting
-		//auto l_LinkSettings = FindLink(i_LinkID);
-		//if (!l_LinkSettings)
-		//{
-		//	l_LinkSettings = AddLink(i_LinkID);
-  //          l_LinkSettings->m_ID = i_LinkID;
-		//}
-  //      if (l_PinList.size() > l_PinIndex && l_pPinInfo)
-  //      {
-  //          l_pNodeInfo->m_LinkIDSet.insert(i_LinkID);
-  //          l_pPinInfo->m_LinkIDSet.insert(i_LinkID);
+    auto loadLinkInfo = [&i_pNodeManager, this](rceditor::LinkID i_LinkID, rceditor::PinID i_StartPinID, rceditor::PinID i_EndPinID) {
+		auto l_LinkSettings = FindLink(i_LinkID);
+		if (!l_LinkSettings)
+		{
+			l_LinkSettings = AddLink(i_LinkID);
+			l_LinkSettings->m_ID = i_LinkID;
 
-		//	if (i_LinkTypeKey == "OutputInfo") {
+			auto l_pStartPinInfo = i_pNodeManager->pinInfo(i_StartPinID);
+			auto l_pEndPinInfo = i_pNodeManager->pinInfo(i_EndPinID);
+			if (!(l_pStartPinInfo && l_pEndPinInfo)) return;
+			auto l_pStartNodeInfo = i_pNodeManager->nodeInfo(l_pStartPinInfo->m_NodeID);
+			auto l_pEndNodeInfo = i_pNodeManager->nodeInfo(l_pEndPinInfo->m_NodeID);
+			if (!(l_pStartNodeInfo && l_pEndNodeInfo)) return;
 
-  //              l_pLinkInfo->m_OutputNodeID = l_NodeID;
-  //              l_pLinkInfo->m_OutputPinID = l_PinID;
-  //              l_LinkSettings->m_StartPinID = l_PinID;
-		//	}
-		//	else if (i_LinkTypeKey == "InputInfo") {
-  //              l_pLinkInfo->m_InputNodeID = l_NodeID;
-  //              l_pLinkInfo->m_InputPinID = l_PinID;
-  //              l_LinkSettings->m_EndPinID = l_PinID;
-		//	}
-		//}
+			l_pStartNodeInfo->linkIDSet().insert(i_LinkID);
+			l_pStartPinInfo->linkIDSet().insert(i_LinkID);
+			l_pEndNodeInfo->linkIDSet().insert(i_LinkID);
+			l_pEndPinInfo->linkIDSet().insert(i_LinkID);
+		}
     };
 
     for (auto l_ListXMLElement = l_LinkListXMLElement->FirstChildElement("Link"); l_ListXMLElement != nullptr; l_ListXMLElement = l_ListXMLElement->NextSiblingElement("Link"))
     {
-        auto l_StartPinID = ParseLinkInfo(l_ListXMLElement, "OutputInfo");
-        auto l_EndPinID = ParseLinkInfo(l_ListXMLElement, "InputInfo");
-
-        auto l_LinkID = i_pNodeManager->addLinkInfo(l_StartPinID, l_EndPinID);
-
-		auto l_LinkSettings = FindLink(l_LinkID);
-        if (!l_LinkSettings)
-        {
-            l_LinkSettings = AddLink(l_LinkID);
-            l_LinkSettings->m_ID = l_LinkID;
+		tinyxml2::XMLElement* l_XmlElementGraphLinkList = l_ListXMLElement->FirstChildElement("GraphLinkList");
+        if (!l_XmlElementGraphLinkList) {
+			auto l_StartPinID = parseLinkInfo(l_ListXMLElement, "OutputInfo");
+			auto l_EndPinID = parseLinkInfo(l_ListXMLElement, "InputInfo");
+			auto l_LinkID = i_pNodeManager->addLinkInfo(l_StartPinID, l_EndPinID);
+			loadLinkInfo(l_LinkID, l_StartPinID, l_EndPinID);
+        }
+        else {
+			for (auto l_XmlElementGraphLink = l_XmlElementGraphLinkList->FirstChildElement("GraphLink"); l_XmlElementGraphLink != nullptr; l_XmlElementGraphLink = l_XmlElementGraphLink->NextSiblingElement("GraphLink"))
+			{
+				auto l_GraphStartPinID = parseLinkInfo(l_XmlElementGraphLink, "OutputInfo");
+				auto l_GraphEndPinID = parseLinkInfo(l_XmlElementGraphLink, "InputInfo");
+				auto l_GraphLinkID = i_pNodeManager->addLinkInfo(l_GraphStartPinID, l_GraphEndPinID);
+				loadLinkInfo(l_GraphLinkID, l_GraphStartPinID, l_GraphEndPinID);
+			}
         }
     }
 }
 
 void ed::Settings::ParseNodes(tinyxml2::XMLElement* i_RootXMLElement, std::string_view i_XMLElementKey, rceditor::NodeManager* i_pNodeManager)
 {
-    std::shared_ptr<rceditor::NodeInfo> l_pNodeInfo{};
-
-	//PinList
-	auto ParsePinList = [&i_pNodeManager](tinyxml2::XMLElement* i_NodeXMLElement, std::string_view i_PinListKey, rceditor::NodeID i_NodeID) -> void {
-		auto l_PinListXMLElement = i_NodeXMLElement->FirstChildElement(i_PinListKey.data());
-        auto l_pNodeInfo = i_pNodeManager->nodeInfo(i_NodeID);
-        if(!l_pNodeInfo) return;
-
-		for (auto l_PinXMLElement = l_PinListXMLElement->FirstChildElement("Pin"); l_PinXMLElement != nullptr; l_PinXMLElement = l_PinXMLElement->NextSiblingElement("Pin")) {
-			rceditor::PinID l_PinID = i_pNodeManager->getPinID();
-			rceditor::PinInfo l_PinInfo{};
-			l_PinInfo.m_NodeID = i_NodeID;
-
-			l_PinInfo.m_Name = l_PinXMLElement->FindAttribute("Name")->Value();
-			l_PinInfo.m_MetaData = l_PinXMLElement->FindAttribute("MetaData")->Value();
-			l_PinInfo.m_DataType.setEnumValue(l_PinXMLElement->FindAttribute("DataType")->Value());
-			l_PinInfo.m_PinAccessType.setEnumValue(l_PinXMLElement->FindAttribute("AccessType")->Value());
-
-			if (i_PinListKey == "ConnectionPinList") {
-				l_PinInfo.m_IsConnection = true;
-
-				l_PinInfo.m_PinType.setEnumValue("Output");
-				i_pNodeManager->pinMap()[l_PinID] = std::make_shared<rceditor::PinInfo>(l_PinInfo);
-                l_pNodeInfo->m_ConnectionOutputPinIDs.push_back(l_PinID);
-
-				rceditor::PinID l_InputPinID = i_pNodeManager->getPinID();
-				l_PinInfo.m_PinType.setEnumValue("Input");
-				l_PinInfo.m_PinAccessType.setEnumValue("Writable");
-				i_pNodeManager->pinMap()[l_InputPinID] = std::make_shared<rceditor::PinInfo>(l_PinInfo);
-                l_pNodeInfo->m_ConnectionInputPinIDs.push_back(l_InputPinID);
-			}
-			else if (i_PinListKey == "InputPinList") {
-				l_PinInfo.m_PinType.setEnumValue("Input");
-				i_pNodeManager->pinMap()[l_PinID] = std::make_shared<rceditor::PinInfo>(l_PinInfo);
-                l_pNodeInfo->m_InputPinIDs.push_back(l_PinID);
-			}
-			else if (i_PinListKey == "OutputPinList") {
-				l_PinInfo.m_PinType.setEnumValue("Output");
-				i_pNodeManager->pinMap()[l_PinID] = std::make_shared<rceditor::PinInfo>(l_PinInfo);
-                l_pNodeInfo->m_OutputPinIDs.push_back(l_PinID);
-			}
+    auto parseNodeSetting = [this](tinyxml2::XMLElement* i_XmlElementNode, rceditor::NodeID i_NodeID) {
+		auto l_NodeSettings = FindNode(i_NodeID);
+		if (!l_NodeSettings)
+		{
+			l_NodeSettings = AddNode(i_NodeID);
+			l_NodeSettings->m_ID = i_NodeID;
 		}
-	};
 
-    //Param List
-    auto ParseParamList = [&i_pNodeManager](tinyxml2::XMLElement* i_NodeXMLElement, rceditor::NodeID i_NodeID) -> void {
-        auto l_ParamListXMLElement = i_NodeXMLElement->FirstChildElement("ParamList");
-		auto l_pNodeInfo = i_pNodeManager->nodeInfo(i_NodeID);
-		if (!l_pNodeInfo) return;
-
-        for (auto l_ParamXMLElement = l_ParamListXMLElement->FirstChildElement("Param"); l_ParamXMLElement != nullptr; l_ParamXMLElement = l_ParamXMLElement->NextSiblingElement("Param")) {
-            rceditor::EditorParamInfo l_ParamInfo{};
-            l_ParamInfo.m_Name = l_ParamXMLElement->FindAttribute("Name")->Value();
-            l_ParamInfo.m_DataType.setEnumValue(l_ParamXMLElement->FindAttribute("DataType")->Value());
-			l_ParamInfo.m_UseRef = l_ParamXMLElement->FindAttribute("UseRef")->BoolValue();
-			l_ParamInfo.m_RefKey = l_ParamXMLElement->FindAttribute("RefKey")->Value();
-            l_ParamInfo.setData("Data", l_ParamXMLElement->FindAttribute("Data")->Value());
-
-            l_pNodeInfo->m_Params.push_back(l_ParamInfo);
-        }
+		l_NodeSettings->m_Location.x = i_XmlElementNode->FindAttribute("LocationX")->FloatValue();
+		l_NodeSettings->m_Location.y = i_XmlElementNode->FindAttribute("LocationY")->FloatValue();
+		l_NodeSettings->m_GroupSize.x = i_XmlElementNode->FindAttribute("GroupSizeX")->FloatValue();
+		l_NodeSettings->m_GroupSize.y = i_XmlElementNode->FindAttribute("GroupSizeY")->FloatValue();
     };
 
-    tinyxml2::XMLElement* l_NodeListXMLElement = i_RootXMLElement->FirstChildElement(i_XMLElementKey.data());
+    std::shared_ptr<rceditor::NodeInfo> l_pNodeInfo{};
+
+	tinyxml2::XMLElement* l_NodeListXMLElement = i_RootXMLElement->FirstChildElement(i_XMLElementKey.data());
     for (auto l_NodeXMLElement = l_NodeListXMLElement->FirstChildElement("Node"); l_NodeXMLElement != nullptr; l_NodeXMLElement = l_NodeXMLElement->NextSiblingElement("Node"))
     {
+        rceditor::NodeID l_NodeID = l_NodeXMLElement->FindAttribute("NodeID")->Int64Value();
+        rceditor::NodeID l_ParentNodeID = l_NodeXMLElement->FindAttribute("ParentNodeID")->Int64Value();
         const auto l_TemplateNameStr = l_NodeXMLElement->FindAttribute("TemplateName")->Value();
 
-        rceditor::NodeID l_NodeID = i_pNodeManager->addNodeInfo(l_TemplateNameStr);
-        l_pNodeInfo = i_pNodeManager->nodeInfo(l_NodeID);
-        if(!l_pNodeInfo) continue;
+        auto l_pNodeInfo = i_pNodeManager->instanceNodeInfo(l_TemplateNameStr, l_ParentNodeID, l_NodeID, false);
+        l_pNodeInfo->loadData(l_NodeXMLElement, i_pNodeManager);
+        if (!l_pNodeInfo) continue;
 
-        auto l_NodeSettings = FindNode(l_NodeID);
-        if (!l_NodeSettings)
-        {
-            l_NodeSettings = AddNode(l_NodeID);
-            l_NodeSettings->m_ID = l_NodeID;
-        }
-
-        l_pNodeInfo->m_GUID = l_NodeXMLElement->FindAttribute("GUID")->Value();
-
-        //Node Graph
         auto l_NodeGraphXMLElement = l_NodeXMLElement->FirstChildElement("NodeGraph");
+        parseNodeSetting(l_NodeGraphXMLElement, l_NodeID);
 
-		l_pNodeInfo->m_Name = l_NodeGraphXMLElement->FindAttribute("NodeName")->Value();
-		l_pNodeInfo->m_Type.setEnumValue(l_NodeGraphXMLElement->FindAttribute("NodeType")->Value());
-		l_pNodeInfo->m_Comment = l_NodeGraphXMLElement->FindAttribute("Comment")->Value();
-        l_NodeSettings->m_Location.x = l_NodeGraphXMLElement->FindAttribute("LocationX")->FloatValue();
-        l_NodeSettings->m_Location.y = l_NodeGraphXMLElement->FindAttribute("LocationY")->FloatValue();
-        l_NodeSettings->m_GroupSize.x = l_NodeGraphXMLElement->FindAttribute("GroupSizeX")->FloatValue();
-        l_NodeSettings->m_GroupSize.y = l_NodeGraphXMLElement->FindAttribute("GroupSizeY")->FloatValue();
+        if (l_pNodeInfo->getNodeType() == rceditor::NodeType::Composite || l_pNodeInfo->getNodeType() == rceditor::NodeType::Task) {
+			auto l_StartNodeXMLElement = l_NodeGraphXMLElement->FirstChildElement("StartNode");
+			auto l_EndNodeXMLElement = l_NodeGraphXMLElement->FirstChildElement("EndNode");
+            if (!(l_StartNodeXMLElement || l_EndNodeXMLElement)) continue;
 
-        ParsePinList(l_NodeXMLElement, "ConnectionPinList", l_NodeID);
-        ParsePinList(l_NodeXMLElement, "InputPinList", l_NodeID);
-        ParsePinList(l_NodeXMLElement, "OutputPinList", l_NodeID);
-    }   
+            rceditor::NodeID l_StartNodeID = l_StartNodeXMLElement->FindAttribute("NodeID")->Int64Value();
+            parseNodeSetting(l_StartNodeXMLElement, l_StartNodeID);
+
+			rceditor::NodeID l_EndNodeID = l_EndNodeXMLElement->FindAttribute("NodeID")->Int64Value();
+			parseNodeSetting(l_EndNodeXMLElement, l_EndNodeID);
+        } 
+	}
 }
 
 bool ed::Settings::Parse(const std::string& string, Settings& result)

@@ -578,6 +578,36 @@ void ax::NodeEditor::NavigateToSelection(bool zoomIn, float duration)
     s_Editor->NavigateTo(s_Editor->GetSelectionBounds(), zoomIn, duration);
 }
 
+float ax::NodeEditor::GetNavigateZoom()
+{
+	return s_Editor->GetNavigateAction().m_Zoom;
+}
+
+ImVec2 ax::NodeEditor::GetNavigateScroll()
+{
+    return s_Editor->GetNavigateAction().m_Scroll;
+}
+
+ImRect ax::NodeEditor::GetNavigateVisibleRect()
+{
+    return s_Editor->GetNavigateAction().m_VisibleRect;
+}
+
+void ax::NodeEditor::SetNavigateZoom(float i_Zoom)
+{
+    s_Editor->GetNavigateAction().m_Zoom = i_Zoom;
+}
+
+void ax::NodeEditor::SetNavigateScroll(ImVec2 i_Scroll)
+{
+    s_Editor->GetNavigateAction().m_Scroll = i_Scroll;
+}
+
+void ax::NodeEditor::SetNavigateVisibleRect(ImRect i_VisibleRect)
+{
+    s_Editor->GetNavigateAction().m_VisibleRect = i_VisibleRect;
+}
+
 bool ax::NodeEditor::ShowNodeContextMenu(NodeId* nodeId)
 {
     return s_Editor->GetContextMenu().ShowNodeContextMenu(nodeId);
