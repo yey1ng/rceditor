@@ -798,7 +798,6 @@ void ax::NodeEditor::SaveData(rceditor::NodeManager* i_pNodeManager)
     s_Editor->SaveData(i_pNodeManager);
 }
 
-
 void ax::NodeEditor::LoadData(rceditor::NodeManager* i_pNodeManager)
 {
     s_Editor->LoadData(i_pNodeManager);

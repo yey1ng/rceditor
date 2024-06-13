@@ -1,0 +1,91 @@
+<RCData>
+    <EditorInfo ScrollX="0" ScrollY="0" Zoom="1" VisibleRectMinX="0" VisibleRectMinY="0" VisibleRectMaxX="636"/>
+    <LinkList>
+        <Link> 
+            <OutputInfo NodeGUID="{AF53D298-A78A-4DAB-A768-6844A9E0BF9D}" IsTemplate="0" PinType="Connection" PinIndex="0"/> 
+            <putInfo NodeGUID="{28D96D0F-DA08-4FB7-BDF3-BE751D0BB1A7}" IsTemplate="0" PinType="Connection" PinIndex="0"/>
+        </Link> 
+
+        <!-- <Link StartNodeGUID="{AF53D298-A78A-4DAB-A768-6844A9E0BF9D}" IsTemplate="0" PinType="Connection" StartPinIndex="0" 
+            InputNodeGUID="{28D96D0F-DA08-4FB7-BDF3-BE751D0BB1A7}" IsTemplate="0" PinType="Connection" EndPinIndex="0"/> -->
+    </LinkList>
+    <NodeList>
+        <Node GUID="{28D96D0F-DA08-4FB7-BDF3-BE751D0BB1A7}" TemplateName="1111" NodeType="GPU">
+            <NodeGraph NodeName="GetTextureInfoFrom" IsDynamicConnectionPin="1" IsDynamicInputPin="1" IsDynamicOutputPin="1" IsDynamicParam="1" Comment="" LocationX="517" LocationY="125" GroupSizeX="0" GroupSizeY="0"/>
+            <TemplateConnectionPinList>
+                <TemplatePin Name="Temp"/>
+            </TemplateConnectionPinList>
+            <TemplateInputPinList>
+                <TemplatePin Name="Temp"/>
+            </TemplateInputPinList>
+            <TemplateOutputPinList>
+                <TemplatePin Name="Temp"/>
+            </TemplateOutputPinList>
+
+            <ConnectionPinList>
+                <Pin Name="Temp" MetaData="test1" DataType="Enum" OutputAccessType = "Readable"/>
+            </ConnectionPinList>
+            <InputPinList>
+               <Pin Name="Temp" MetaData="test1" DataType="Enum"/>
+            </InputPinList>
+            <OutputPinList>
+                  <Pin Name="Temp" MetaData="test1" DataType="Enum" OutputAccessType = "Readable"/>
+            </OutputPinList>
+        </Node>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <Node GUID="{28D96D0F-DA08-4FB7-BDF3-BE751D0BB1A7}" TemplateName="" NodeType="">
+            <NodeGraph LocationX="517" LocationY="125" GroupSizeX="0" GroupSizeY="0" NodeName="GetTextureInfoFrom" Comment="" IsDynamicConnectionPin="1" IsDynamicInputPin="1" IsDynamicOutputPin="1" IsDynamicParam="1"/>
+            <TemplatePin>
+                <ConnectionPinList>
+                    <Pin Name="Temp" PinType="1" AccessFlags="1" HasParam="0" DataType="1" Data="128"/>
+
+                </ConnectionPinList>
+            </TemplatePin>
+            <NodePin>
+            </NodePin>
+
+
+            
+            <InputPinList>
+                <staticPin Name="format" Value="28"/>
+                <Pin Name="width" PinType="1" AccessFlags="1" HasParam="0" DataType="1" Data="128"/>
+                <Pin Name="height" PinType="1" AccessFlags="1" HasParam="0" DataType="1" Data="128"/>
+                <Pin Name="mipLevel" PinType="1" AccessFlags="1" HasParam="0" DataType="1" Data="1"/>
+                <Pin Name="layerCount" PinType="1" AccessFlags="1" HasParam="0" DataType="1" Data="1"/>
+            </InputPinList>
+            <OutputPinList>
+                <Pin Name="refTexture" PinType="2" AccessFlags="2" HasParam="0" DataType="14"/>
+            </OutputPinList>
+        </Node>
+        <Node>
+            <NodeGraph LocationX="147" LocationY="149" GroupSizeX="0" GroupSizeY="0" Name="GetTextureInfo" Comment="" IsDynamicPin="0" IsDynamicParam="0"/>
+            <NodeInfo GUID="{AF53D298-A78A-4DAB-A768-6844A9E0BF9D}" Type="2"/>
+            <InputPinList>
+                <Pin Name="refTexture" PinType="1" AccessFlags="2" HasParam="0" DataType="14"/>
+            </InputPinList>
+            <OutputPinList>
+                <Pin Name="format" PinType="2" AccessFlags="1" HasParam="0" DataType="3" EnumName="ERCFormat" EnumValue="28"/>
+                <Pin Name="width" PinType="2" AccessFlags="1" HasParam="0" DataType="1" Data="128"/>
+                <Pin Name="height" PinType="2" AccessFlags="1" HasParam="0" DataType="1" Data="128"/>
+                <Pin Name="mipLevel" PinType="2" AccessFlags="1" HasParam="0" DataType="1" Data="1"/>
+                <Pin Name="layerCount" PinType="2" AccessFlags="1" HasParam="0" DataType="1" Data="1"/>
+            </OutputPinList>
+        </Node>
+    </NodeList>
+</RCData>

@@ -1,0 +1,10 @@
+<NodeList/>
+
+<NodeNoUseList/>
+
+<RCData>
+    <EditorInfo ScrollX="0" ScrollY="0" Zoom="1" VisibleRectMinX="0" VisibleRectMinY="0" VisibleRectMaxX="636"/>
+    <LinkList>
+        <Link OutputNodeGUID="{88ACF392-D2FD-4FF4-9B6D-B03E2CAE0899}" OutputPinIndex="0" InputNodeGUID="{B76CFCA9-C276-47BD-A18D-0EA63B775DF6}" InputPinIndex="0"/>
+    </LinkList>
+</RCData>

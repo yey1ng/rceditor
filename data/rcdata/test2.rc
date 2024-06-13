@@ -1,0 +1,55 @@
+<RCData>
+    <EditorInfo ScrollX="300" ScrollY="0" Zoom="1" VisibleRectMinX="300" VisibleRectMinY="0" VisibleRectMaxX="636"/>
+    <LinkList LinkSize="3">
+        <Link/>
+        <Link/>
+        <Link/>
+    </LinkList>
+    <NodeList NodeSize="2">
+        <Node GUID="{BBB9E8AB-E811-49BC-BF67-F0E5701842E7}" TemplateName="GetTextureInfoFrom33">
+            <NodeGraph GUID="{BBB9E8AB-E811-49BC-BF67-F0E5701842E7}" NodeName="GetTextureInfoFrom33" ClassName="GetTextureInfoFrom" IsDynamicConnectionPin="1" IsDynamicInputPin="1" IsDynamicOutputPin="1" IsDynamicParam="1" NodeType="GPU" Comment="" LocationX="696" LocationY="148" GroupSizeX="0" GroupSizeY="0"/>
+            <TemplateConnectionPinList>
+                <Pin Name="refTexture"/>
+                <Pin Name="Temp"/>
+            </TemplateConnectionPinList>
+            <TemplateInputPinList>
+                <Pin Name="format"/>
+                <Pin Name="width"/>
+                <Pin Name="height"/>
+                <Pin Name="mipLevel"/>
+                <Pin Name="layerCount"/>
+            </TemplateInputPinList>
+            <TemplateOutputPinList>
+                <Pin Name="Temp"/>
+                <Pin Name="Temp"/>
+            </TemplateOutputPinList>
+            <ConnectionPinList/>
+            <InputPinList>
+                <Pin Name="Temp1" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="Temp3" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="Temp2" MetaData="" DataType="Int" AccessType="Readable"/>
+            </InputPinList>
+            <OutputPinList/>
+        </Node>
+        <Node GUID="{369B6E7D-D0D0-4E09-915D-03FC66330441}" TemplateName="GetTextureInfoFrom11">
+            <NodeGraph GUID="{369B6E7D-D0D0-4E09-915D-03FC66330441}" NodeName="GetTextureInfoFrom11" ClassName="GetTextureInfoFrom" IsDynamicConnectionPin="1" IsDynamicInputPin="1" IsDynamicOutputPin="1" IsDynamicParam="1" NodeType="GPU" Comment="" LocationX="376" LocationY="44" GroupSizeX="0" GroupSizeY="0"/>
+            <TemplateConnectionPinList>
+                <Pin Name="refTexture"/>
+            </TemplateConnectionPinList>
+            <TemplateInputPinList>
+                <Pin Name="format"/>
+                <Pin Name="width"/>
+                <Pin Name="height"/>
+                <Pin Name="mipLevel"/>
+                <Pin Name="layerCount"/>
+            </TemplateInputPinList>
+            <ConnectionPinList/>
+            <InputPinList/>
+            <OutputPinList>
+                <Pin Name="Temp2" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="Temp1" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="Temp3" MetaData="" DataType="Int" AccessType="Readable"/>
+            </OutputPinList>
+        </Node>
+    </NodeList>
+</RCData>

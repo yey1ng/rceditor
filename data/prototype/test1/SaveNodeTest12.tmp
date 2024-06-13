@@ -1,0 +1,51 @@
+<RCFavoriteNode NodeName="SaveNodeTest12" TemplateName="CompositeNode" NodeType="Composite">
+    <EditorInfo Comment="">
+        <StartNode RelativeNodeID="1" NodeName="Start" TemplateName="Start" Comment="" LocationX="166" LocationY="284"/>
+        <EndNode RelativeNodeID="2" NodeName="End" TemplateName="End" Comment="" LocationX="766" LocationY="264"/>
+    </EditorInfo>
+    <InputOutputList/>
+    <InputList>
+        <Input Name="TempPin1" MetaData="" DataType="Int" AccessType="Readable"/>
+        <Input Name="TempPin2" MetaData="" DataType="Int" AccessType="Readable"/>
+    </InputList>
+    <OutputList>
+        <Output Name="TempPin3" MetaData="" DataType="Int" AccessType="Readable"/>
+        <Output Name="TempPin4" MetaData="" DataType="Int" AccessType="Readable"/>
+    </OutputList>
+    <ParamList/>
+    <RCNodeLinkList>
+        <Link>
+            <Producer NodeID="3" PinName="Temp4"/>
+            <Consumer NodeID="2" PinName="TempPin3"/>
+        </Link>
+        <Link>
+            <Producer NodeID="3" PinName="Temp3"/>
+            <Consumer NodeID="2" PinName="TempPin4"/>
+        </Link>
+        <Link>
+            <Producer NodeID="1" PinName="TempPin1"/>
+            <Consumer NodeID="3" PinName="mipLevel"/>
+        </Link>
+        <Link>
+            <Producer NodeID="1" PinName="TempPin2"/>
+            <Consumer NodeID="3" PinName="width"/>
+        </Link>
+        <Link>
+            <Producer NodeID="1" PinName="TempPin1"/>
+            <Consumer NodeID="3" PinName="layerCount"/>
+        </Link>
+        <Link>
+            <Producer NodeID="1" PinName="TempPin2"/>
+            <Consumer NodeID="3" PinName="height"/>
+        </Link>
+    </RCNodeLinkList>
+    <RCNodeList>
+        <RCNode RelativeNodeID="3" NodeName="1111111111" TemplateName="1111111111" NodeType="GPU" LocationX="440" LocationY="188">
+            <NodeGraph Comment=""/>
+            <InputOutput/>
+            <Input/>
+            <Output/>
+            <ParamList/>
+        </RCNode>
+    </RCNodeList>
+</RCFavoriteNode>

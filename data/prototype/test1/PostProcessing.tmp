@@ -1,0 +1,35 @@
+<RCTemplateNode NodeName="PostProcessing" ClassName="PostProcessing" NodeType="PS" NodeTag="Vulkan" IsDynamicInputOutput="false" IsDynamicInput="false" IsDynamicOutput="false" IsDynamicParam="false">
+    <EditorInfo Comment=""/>
+    <InputOutputList>
+        <InputOutput Name="color" InputMetaData="" OutputMetaData = "" AccessType="Writable" DataType="Image2D"/>
+    </InputOutputList>
+    <InputList>
+        <Input Name="texture2d" MetaData = ""  AccessType="Readable" DataType="Image2D"/>
+        <Input Name="sampler2d" MetaData = ""  AccessType="Readable" DataType="Image2D"/>
+        <Input Name="uniformbuffer" MetaData = ""  AccessType="Readable" DataType="Buffer"/>
+        <Input Name="uniformtexelbuffer" MetaData = ""  AccessType="Readable" DataType="Buffer"/>
+    </InputList>
+    <OutputList>
+        <Input Name="storagebuffer" MetaData = ""  AccessType="Readable" DataType="Buffer"/>
+        <Input Name="storagetexelbuffer" MetaData = ""  AccessType="Writable" DataType="Buffer"/>
+    </OutputList>
+    <ParamList>
+        <Param Name="color.usage" DataType="VkImageUsage" Data="VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT" UseRef="0" RefKey=""/>
+
+        <Param Name="texture2d.usage" DataType="VkImageUsage" Data="VK_IMAGE_USAGE_SAMPLED_BIT" UseRef="0" RefKey=""/>
+
+        <Param Name="sampler2d.usage" DataType="VkImageUsage" Data="VK_IMAGE_USAGE_SAMPLED_BIT" UseRef="0" RefKey=""/>
+        <Param Name="sampler2d.sampler" DataType="Bool" Data="1" UseRef="0" RefKey=""/>
+
+        <Param Name="uniformbuffer.usage" DataType="VkBufferUsage" Data="VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT" UseRef="0" RefKey=""/>
+        <Param Name="uniformbuffer.struct" DataType="String" Data="float4 test1;" UseRef="0" RefKey=""/>
+
+        <Param Name="uniformtexelbuffer.usage" DataType="VkBufferUsage" Data="VK_BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT" UseRef="0" RefKey=""/>
+
+        <Param Name="storagebuffer.usage" DataType="VkBufferUsage" Data="VK_BUFFER_USAGE_STORAGE_BUFFER_BIT" UseRef="0" RefKey=""/>
+        <Param Name="storagebuffer.struct" DataType="String" Data="float4 test1;" UseRef="0" RefKey=""/>
+
+        <Param Name="storagetexelbuffer.usage" DataType="VkBufferUsage" Data="VK_BUFFER_USAGE_STORAGE_TEXEL_BUFFER_BIT" UseRef="0" RefKey=""/>
+        <Param Name="storagetexelbuffer.format" DataType="String" Data="r32ui" UseRef="0" RefKey=""/>
+    </ParamList>
+</RCTemplateNode>

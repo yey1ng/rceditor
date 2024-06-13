@@ -1,0 +1,119 @@
+<RCData>
+    <EditorInfo ScrollX="-0" ScrollY="0" Zoom="1" VisibleRectMinX="-0" VisibleRectMinY="0" VisibleRectMaxX="636" VisibleRectMaxY="0"/>
+    <UseLinkList LinkSize="8">
+        <Link>
+            <OutputInfo NodeGUID="1000000001" PinIndex="1" IsTemplate="true" IsConnection="false" PinType="Output"/>
+            <InputInfo NodeGUID="1000000001" PinIndex="2" IsTemplate="true" IsConnection="false" PinType="Input"/>
+        </Link>
+        <Link>
+            <OutputInfo NodeGUID="1000000001" PinIndex="2" IsTemplate="true" IsConnection="false" PinType="Output"/>
+            <InputInfo NodeGUID="1000000001" PinIndex="2" IsTemplate="true" IsConnection="false" PinType="Input"/>
+        </Link>
+        <Link>
+            <OutputInfo NodeGUID="1000000001" PinIndex="2" IsTemplate="true" IsConnection="false" PinType="Output"/>
+            <InputInfo NodeGUID="1000000001" PinIndex="3" IsTemplate="true" IsConnection="false" PinType="Input"/>
+        </Link>
+        <Link>
+            <OutputInfo NodeGUID="1000000001" PinIndex="3" IsTemplate="true" IsConnection="false" PinType="Output"/>
+            <InputInfo NodeGUID="1000000001" PinIndex="4" IsTemplate="true" IsConnection="false" PinType="Input"/>
+        </Link>
+        <Link>
+            <OutputInfo NodeGUID="1000000001" PinIndex="1" IsTemplate="false" IsConnection="true" PinType="Output"/>
+            <InputInfo NodeGUID="1000000001" PinIndex="1" IsTemplate="false" IsConnection="true" PinType="Input"/>
+        </Link>
+        <Link>
+            <OutputInfo NodeGUID="1000000001" PinIndex="0" IsTemplate="false" IsConnection="true" PinType="Output"/>
+            <InputInfo NodeGUID="1000000001" PinIndex="0" IsTemplate="false" IsConnection="false" PinType="Input"/>
+        </Link>
+        <Link>
+            <OutputInfo NodeGUID="1000000001" PinIndex="0" IsTemplate="false" IsConnection="false" PinType="Output"/>
+            <InputInfo NodeGUID="1000000004" PinIndex="0" IsTemplate="false" IsConnection="true" PinType="Input"/>
+            <GraphLink> 
+                <Link>
+                    <OutputInfo NodeGUID="1000000001" PinIndex="0" IsTemplate="false" IsConnection="false" PinType="Output"/>
+                    <InputInfo NodeGUID="1000000002" PinIndex="0" IsTemplate="false" IsConnection="true" PinType="Input"/>
+                </Link>
+                <Link>
+                    <OutputInfo NodeGUID="1000000003" PinIndex="0" IsTemplate="false" IsConnection="false" PinType="Output"/>
+                    <InputInfo NodeGUID="1000000004" PinIndex="0" IsTemplate="false" IsConnection="true" PinType="Input"/>
+                </Link>
+            </GraphLink>
+        </Link>
+        <Link>
+            <OutputInfo NodeGUID="1000000001" PinIndex="1" IsTemplate="true" IsConnection="false" PinType="Input"/>
+            <InputInfo NodeGUID="1000000001" PinIndex="1" IsTemplate="false" IsConnection="false" PinType="Input"/>
+        </Link>
+    </UseLinkList>
+    <>
+
+    <NodeList NodeSize="2">
+        <Node NodeID="20000001" TemplateName="GetTextureInfoFrom11">
+            <NodeGraph NodeName="GetTextureInfoFromTest1" ParentID="0" Comment="123123
+123" LocationX="686" LocationY="196" GroupSizeX="0" GroupSizeY="0"/>
+            <ConnectionPinList>
+                <Pin Name="vecTest" InputMetaData="position" OutputMeatData="test1" DataType="Vector4" AccessType="Writable"/>
+                <Pin Name="diffuseInt" InputMetaData="diffuse" OutputMeatData="test1" DataType="Texture" AccessType="Writable"/>
+            </ConnectionPinList>
+            <InputPinList>
+                <Pin Name="intTest" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="matTest" MetaData="" DataType="Matrix4" AccessType="Readable"/>
+            </InputPinList>
+            <OutputPinList/>
+            <ParamList>
+                <Param Name="test1" MetaData="RCFormat" Data="RC_FORMAT_UNKNOWN" UseRef="false" RefKey=""/>
+                <Param Name="test2" MetaData="Bool" Data="1" UseRef="false" RefKey=""/>
+                <Param Name="test3" MetaData="Float" Data="177.233002" UseRef="false" RefKey=""/>
+            </ParamList>
+        </Node>
+        <Node GUID="{CFD9812B-489F-4EFB-9344-EFEE266CEBEB}" TemplateName="1111111111">
+            <NodeGraph NodeName="GetTextureInfoFromTest0" IsDynamicConnectionPin="1" IsDynamicInputPin="1" IsDynamicOutputPin="1" IsDynamicParam="1" NodeType="GPU" Comment="" LocationX="328" LocationY="40" GroupSizeX="0" GroupSizeY="0"/>
+            <ConnectionPinList>
+                <Pin Name="intTest" MetaData="lightIndex" DataType="Int" AccessType="Readable"/>
+                <Pin Name="diffuse" MetaData="diffuse" DataType="Texture" AccessType="Writable"/>
+            </ConnectionPinList>
+            <InputPinList/>
+            <OutputPinList>
+                <Pin Name="vecTest" MetaData="position" DataType="Vector4" AccessType="Writable"/>
+                <Pin Name="matTest" MetaData="worldMat" DataType="Matrix4" AccessType="Readable"/>
+            </OutputPinList>
+            <ParamList>
+                <Param Name="test1" MetaData="Vector4" Data="1,2,3,4" UseRef="true" RefKey="test1"/>
+                <Param Name="test3" MetaData="Matrix4" Data="100,  3,  0,  4,  5,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1" UseRef="false" RefKey="123124"/>
+                <Param Name="test2" MetaData="String" Data="template" UseRef="true" RefKey="template"/>
+            </ParamList>
+        </Node>
+        <Node GUID="200000002" TemplateName="CompositeNode">
+            <NodeGraph NodeName="CompositeNode" ParentID="0" NodeType="Composite" Comment="" LocationX="686" LocationY="196" GroupSizeX="0" GroupSizeY="0"/>
+        </Node>
+
+        <Node NodeID="20000001" TemplateName="CompositeNode">
+            <NodeGraph NodeName="Composite" ParentID="0" NodeType="Composite" Comment="" LocationX="686" LocationY="196" GroupSizeX="0" GroupSizeY="0"/>
+            <StartNode NodeName="Start" NodeID="200000003" TemplateName="Start" NodeType="Start" Comment="" LocationX="686" LocationY="196" GroupSizeX="0" GroupSizeY="0"/>
+            <EndNode NodeName="End" NodeID="200000004" TemplateName="End" NodeType="End" Comment="" LocationX="686" LocationY="196" GroupSizeX="0" GroupSizeY="0"/>
+
+            <InputPinList>
+                <Pin Name="intTest" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="matTest" MetaData="" DataType="Matrix4" AccessType="Readable"/>
+            </InputPinList>
+            <OutputPinList/>
+        </Node>
+
+        <Node NodeID="300000001" TemplateName = "GBufferCommand" Queue="Compute" QueueIndex="1">
+            <NodeGraph NodeType="Command" Comment="" LocationX="686" LocationY="196" GroupSizeX="0" GroupSizeY="0"/>
+            <StartNode NodeName="Start" NodeID="200000003" TemplateName="Start" NodeType="Start" Comment="" LocationX="686" LocationY="196" GroupSizeX="0" GroupSizeY="0"/>
+            <EndNode NodeName="End" NodeID="200000004" TemplateName="End" NodeType="End" Comment="" LocationX="686" LocationY="196" GroupSizeX="0" GroupSizeY="0"/>
+            <InputPinList>
+                <Pin Name="intTest" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="matTest" MetaData="" DataType="Matrix4" AccessType="Readable"/>
+            </InputPinList>
+            <OutputPinList/>
+        </Node> 
+    </NodeList>
+
+    <CommandList>
+    
+
+    </CommandList>
+
+
+</RCData>

@@ -1,0 +1,14 @@
+<RCFavoriteNode NodeName="SaveTest6" TemplateName="1111111111" NodeType="GPU">
+    <EditorInfo Comment=""/>
+    <InputOutputList/>
+    <InputList/>
+    <OutputList/>
+    <TemplateParamList>
+        <Param Name="Param1" DataType="Int" Data="222" UseRef="false" RefKey="test1"/>
+        <Param Name="Param2" DataType="Int" Data="222" UseRef="false" RefKey="test2"/>
+    </TemplateParamList>
+    <ParamList>
+        <Param Name="TempParam123" DataType="Int" Data="0" UseRef="false" RefKey=""/>
+        <Param Name="TempParam1" DataType="Int" Data="0" UseRef="false" RefKey=""/>
+    </ParamList>
+</RCFavoriteNode>

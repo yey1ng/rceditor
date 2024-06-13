@@ -602,14 +602,19 @@ struct Settings
     void MakeDirty(SaveReasonFlags reason, Node* node = nullptr);
 
 	void Serialize(const std::string& i_FileName, rceditor::NodeManager* i_pNodeManager);
-    void SerializeEditorInfo(tinyxml2::XMLDocument* i_XMLDocument, tinyxml2::XMLElement* i_XmlElement, rceditor::NodeManager* i_pNodeManager);
-	void SerializeLinks(tinyxml2::XMLDocument* i_XMLDocument, tinyxml2::XMLElement* i_XmlElement, rceditor::NodeManager* i_pNodeManager);
-	void SerializeNodes(tinyxml2::XMLDocument* i_XMLDocument, tinyxml2::XMLElement* i_XmlElement, rceditor::NodeManager* i_pNodeManager);
+    void SerializeEditorInfo(tinyxml2::XMLElement* i_XmlElement, rceditor::NodeManager* i_pNodeManager);
+    void SerializeNodeManager(tinyxml2::XMLElement* i_XmlElement, rceditor::NodeManager* i_pNodeManager);
+	void SerializeLinkList(tinyxml2::XMLElement* i_XmlElement, rceditor::NodeManager* i_pNodeManager, std::map<rceditor::LinkID, rceditor::RealLinkInfo> i_LinkFlodInfoMap, rceditor::NodeID i_ParentNodeID);
+	void SerializeNodeList(tinyxml2::XMLElement* i_XmlNodeElement, tinyxml2::XMLElement* i_XmlListElement, rceditor::NodeManager* i_pNodeManager, std::map<rceditor::LinkID, rceditor::RealLinkInfo> i_LinkFlodInfoMap, rceditor::NodeID i_ParentNodeID);
+
+    void SerializeTaskList(tinyxml2::XMLElement* i_XmlElement, rceditor::NodeManager* i_pNodeManager);
+    void SerializeNodeList(tinyxml2::XMLElement* i_XmlElement, rceditor::NodeManager* i_pNodeManager);
 
     void Parse(const std::string& i_FileName, rceditor::NodeManager* i_pNodeManager);
 	void ParseEditorInfo(tinyxml2::XMLElement* i_RootXMLElement, std::string_view i_XMLElementKey, rceditor::NodeManager* i_pNodeManager);
-	void ParseLinks(tinyxml2::XMLElement* i_RootXMLElement, std::string_view i_XMLElementKey, rceditor::NodeManager* i_pNodeManager);
-	void ParseNodes(tinyxml2::XMLElement* i_RootXMLElement, std::string_view i_XMLElementKey, rceditor::NodeManager* i_pNodeManager);
+    void ParseNodeManager(tinyxml2::XMLElement* i_XmlRoot, rceditor::NodeManager* i_pNodeManager);
+	void ParseLinkList(tinyxml2::XMLElement* i_XmlElement, rceditor::NodeManager* i_pNodeManager);
+	void ParseNodeList(tinyxml2::XMLElement* i_XmlElement, rceditor::NodeManager* i_pNodeManager);
 
     static bool Parse(const std::string& string, Settings& settings);
 };

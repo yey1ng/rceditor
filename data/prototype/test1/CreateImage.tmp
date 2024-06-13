@@ -1,0 +1,15 @@
+<RCTemplateNode NodeName="CreateImage" ClassName="CreateImage" NodeType="Data" NodeTag="Vulkan" IsDynamicInputOutput="false" IsDynamicInput="false" IsDynamicOutput="false" IsDynamicParam="true">
+    <EditorInfo Comment=""/>
+    <OutputList>        
+        <Output Name="buffer" MetaData = "" AccessType="Writable" DataType="Buffer"/>
+    </OutputList>
+    <ParamList>
+        <Param Name="usage" DataType="String" Data="VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT" UseRef="0" RefKey=""/>
+        <Param Name="format" DataType="String" Data="VK_FORMAT_UNDEFINED" UseRef="0" RefKey=""/>
+        <Param Name="tiling" DataType="String" Data="VK_IMAGE_TILING_OPTIMAL" UseRef="0" RefKey=""/>
+        <Param Name="mipLevels" DataType="Int" Data="1" UseRef="0" RefKey=""/>
+        <Param Name="arrayLayers" DataType="Int" Data="1" UseRef="0" RefKey=""/>
+        <Param Name="width" DataType="Int" Data="1024" UseRef="0" RefKey=""/>
+        <Param Name="height" DataType="Int" Data="1024" UseRef="0" RefKey=""/>
+    </ParamList>
+</RCTemplateNode>

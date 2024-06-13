@@ -1,0 +1,15 @@
+<RCFavoriteNode NodeName="SaveTest1" TemplateName="1111111111" NodeType="GPU">
+    <EditorInfo Comment=""/>
+    <InputOutputList>
+        <InputOutput Name="TempPin3" InputMetaData="" OutputMetaData="" DataType="Int" AccessType="Readable"/>
+    </InputOutputList>
+    <InputList>
+        <Input Name="TempPin1" MetaData="" DataType="Int" AccessType="Readable"/>
+    </InputList>
+    <OutputList>
+        <Output Name="TempPin2" MetaData="" DataType="Int" AccessType="Readable"/>
+    </OutputList>
+    <ParamList>
+        <Param Name="TempParam1" DataType="Int" Data="0" UseRef="false" RefKey=""/>
+    </ParamList>
+</RCFavoriteNode>

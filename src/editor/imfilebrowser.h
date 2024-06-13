@@ -522,6 +522,12 @@ inline void ImGui::FileBrowser::Display()
                 continue;
             }
 
+            //Only Show Dir
+            if (!rsc.isDir && (flags_ & ImGuiFileBrowserFlags_SelectDirectory))
+            {
+                continue;
+            }
+
             bool selected = selectedFilenames_.find(rsc.name)
                 != selectedFilenames_.end();
 

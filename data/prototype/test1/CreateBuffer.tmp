@@ -1,0 +1,10 @@
+<RCTemplateNode NodeName="CreateBuffer" ClassName="CreateBuffer" NodeType="Data" NodeTag="Vulkan" IsDynamicInputOutput="false" IsDynamicInput="false" IsDynamicOutput="false" IsDynamicParam="true">
+    <EditorInfo Comment=""/>
+    <OutputList>        
+        <Output Name="buffer" MetaData = "" AccessType="Writable" DataType="Buffer"/>
+    </OutputList>
+    <ParamList>
+        <Param Name="layout" DataType="String" Data="" UseRef="0" RefKey=""/>
+        <Param Name="format" DataType="String" Data="" UseRef="0" RefKey=""/>
+    </ParamList>
+</RCTemplateNode>

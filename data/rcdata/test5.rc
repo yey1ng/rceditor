@@ -1,0 +1,37 @@
+<RCData>
+    <EditorInfo ScrollX="0" ScrollY="0" Zoom="1" VisibleRectMinX="0" VisibleRectMinY="0" VisibleRectMaxX="636"/>
+    <LinkList>
+        <Link OutputNodeGUID="{54889686-8770-45FB-8939-02CC994BC99D}" OutputPinIndex="0" InputNodeGUID="{51FC668D-D1EC-4025-87F5-189889983C1B}" InputPinIndex="0"/>
+    </LinkList>
+    <NodeList NodeSize="2">
+        <Node GUID="{51FC668D-D1EC-4025-87F5-189889983C1B}" NodeName="GetTextureInfoFrom" Template="GetTextureInfoFrom" ClassName = "GetTextureInfoFrom">
+            <NodeGraph LocationX="439" LocationY="183" GroupSizeX="0" GroupSizeY="0" Comment="" NodeType = "2" IsDynamicInputPin="1" IsDynamicOutputPin="1" IsDynamicParam="1"/>
+            <InputPinList>
+                <Pin Name="format" PinType="1" AccessFlags="1" HasParam="0" DataType="3" EnumName="ERCFormat" EnumValue="28"/>
+                <Pin Name="width" PinType="1" AccessFlags="1" HasParam="0" DataType="1" Data="128"/>
+                <Pin Name="height" PinType="1" AccessFlags="1" HasParam="0" DataType="1" Data="128"/>
+                <Pin Name="mipLevel" PinType="1" AccessFlags="1" HasParam="0" DataType="1" Data="1"/>
+                <Pin Name="layerCount" PinType="1" AccessFlags="1" HasParam="0" DataType="1" Data="1"/>
+            </InputPinList>
+            <OutputPinList>
+                <Pin Name="refTexture" PinType="2" AccessFlags="2" HasParam="0" DataType="14"/>
+            </OutputPinList>
+            <ParamList/>
+        </Node>
+        <Node GUID="{54889686-8770-45FB-8939-02CC994BC99D}" Name="GetTextureInfo" Template="GetTextureInfo">
+            <NodeGraph LocationX="100" LocationY="157" GroupSizeX="0" GroupSizeY="0" Comment="" NodeType = "2" IsDynamicInputPin="1" IsDynamicOutputPin="1" IsDynamicParam="0"/>
+            <InputPinList>
+                <Pin Name="refTexture" PinType="1" AccessFlags="2" HasParam="0" DataType="14"/>
+            </InputPinList>
+            <OutputPinList>
+                <Pin Name="format" PinType="2" AccessFlags="1" HasParam="0" DataType="3" EnumName="ERCFormat" EnumValue="28"/>
+                <Pin Name="width" PinType="2" AccessFlags="1" HasParam="0" DataType="1" Data="128"/>
+                <Pin Name="height" PinType="2" AccessFlags="1" HasParam="0" DataType="1" Data="128"/>
+                <Pin Name="mipLevel" PinType="2" AccessFlags="1" HasParam="0" DataType="1" Data="1"/>
+                <Pin Name="layerCount" PinType="2" AccessFlags="1" HasParam="0" DataType="1" Data="1"/>
+            </OutputPinList>
+            <ParamList/>
+        </Node>
+    </NodeList>
+    <NodeNoUseList NodeSize="0"/>
+</RCData>

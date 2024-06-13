@@ -1,0 +1,33 @@
+<RCFavoriteNode NodeName="SaveTest4" TemplateName="CompositeNode" NodeType="Composite">
+    <EditorInfo Comment="">
+        <StartNode RelativeNodeID="1" NodeName="Start" TemplateName="Start" Comment="" LocationX="26" LocationY="120"/>
+        <EndNode RelativeNodeID="2" NodeName="End" TemplateName="End" Comment="" LocationX="680" LocationY="200"/>
+    </EditorInfo>
+    <InputOutputList/>
+    <InputList>
+        <Input Name="TempPin1" MetaData="" DataType="Int" AccessType="Readable"/>
+    </InputList>
+    <OutputList>
+        <Output Name="TempPin2" MetaData="" DataType="Int" AccessType="Readable"/>
+    </OutputList>
+    <ParamList/>
+    <RCNodeList>
+        <RCFavoriteNode RelativeNodeID="3" NodeName="1111111111" TemplateName="1111111111" NodeType="GPU" LocationX="306" LocationY="144">
+            <EditorInfo Comment=""/>
+            <InputOutputList/>
+            <InputList/>
+            <OutputList/>
+            <ParamList/>
+        </RCFavoriteNode>
+    </RCNodeList>
+    <RCNodeLinkList>
+        <Link>
+            <Producer NodeID="1" PinName="TempPin1"/>
+            <Consumer NodeID="3" PinName="height"/>
+        </Link>
+        <Link>
+            <Producer NodeID="3" PinName="Temp3"/>
+            <Consumer NodeID="2" PinName="TempPin2"/>
+        </Link>
+    </RCNodeLinkList>
+</RCFavoriteNode>

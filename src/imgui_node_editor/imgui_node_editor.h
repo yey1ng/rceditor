@@ -21,6 +21,7 @@
 # include <cstdint> // std::uintXX_t
 # include <utility> // std::move
 # include <base/public/base.h>
+# include <editor/nodemanager.h>
 
 
 //------------------------------------------------------------------------------

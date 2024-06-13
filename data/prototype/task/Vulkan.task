@@ -1,0 +1,3 @@
+<RCTaskNode NodeName="Vulkan" ClassName="" NodeType="Task" NodeTag="Vulkan" QueueFamily="Graphic1" IsDynamicInputOutput="false" IsDynamicInput="true" IsDynamicOutput="true" IsDynamicParam="true">
+    <NodeGraph Comment=""/>
+</RCTaskNode>

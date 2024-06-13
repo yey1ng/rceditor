@@ -1,0 +1,37 @@
+<RCTemplateNode NodeName="1111111111" ClassName="GetTextureInfoFrom" NodeType="GPU" NodeTag="Vulkan|Host" IsDynamicInputOutput="true" IsDynamicInput="true" IsDynamicOutput="true" IsDynamicParam="true">
+    <EditorInfo Comment="1231111111111111111111111111111111111111111111111111111111111
+    11111111111111111
+    11111111111111111111111"/>
+    <InputOutputList>
+        <InputOutput Name="refTexture" InputMetaData="" OutputMetaData = "" AccessType="Readable" DataType="Image2D"/>
+        <InputOutput Name="Temp" InputMetaData="temp1" OutputMetaData = "" AccessType="Writable" DataType="Int"/>
+    </InputOutputList>
+    <InputList>
+        <Input Name="format" MetaData="" AccessType="Readable" DataType="RCFormat"/>
+        <Input Name="width" MetaData="" AccessType="Readable" DataType="Int"/>
+        <Input Name="height" MetaData="" AccessType="Readable" DataType="Int"/>
+        <Input Name="mipLevel" MetaData="" AccessType="Readable" DataType="Int"/>
+        <Input Name="layerCount" MetaData="" AccessType="Readable" DataType="Int"/>
+        <Input Name="Temp0" MetaData="temp2" AccessType="Readable" DataType="Int"/>
+    </InputList>
+    <OutputList>
+        <Output Name="Temp1" MetaData="temp3" AccessType="Readable" DataType="String"/>
+        <Output Name="Temp2" MetaData="" AccessType="Writable" DataType="Int"/>
+        <Output Name="Temp3" MetaData="" AccessType="Readable" DataType="Int"/>
+        <Output Name="Temp4" MetaData="" AccessType="Readable" DataType="Int"/>
+    </OutputList>
+    <ParamList>
+        <Param Name="Param3" DataType="Int" Data="88" UseRef="0" RefKey="test1">
+            <MetaData WidgetType="Slider" Min="0" Max="100"/>
+        </Param>
+        <Param Name="Param4" DataType="Float" Data="23.4" UseRef="0" RefKey="test1">
+            <MetaData WidgetType="Slider" Min="0.0" Max="66.6"/>
+        </Param>
+        <Param Name="Param1" DataType="Vector3f" Data="0,0,0" UseRef="0" RefKey="test1">
+            <MetaData WidgetType="ColorPick"/>
+        </Param>
+        <Param Name="Param2" DataType="Vector4f" Data="0,0,0,0" UseRef="0" RefKey="test2">
+            <MetaData WidgetType="ColorPick"/>
+        </Param>
+    </ParamList>
+</RCTemplateNode>

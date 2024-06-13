@@ -56,7 +56,69 @@ constexpr U64 NODE_ID_OFFSET = 1e8;
 constexpr U64 LINK_ID_OFFSET = 2e8;
 constexpr U64 PIN_ID_OFFSET = 3e8;
 
-const static std::string g_RootNodeStackStr = "Root";
+constexpr std::string_view g_RootNodeStackStr = "Root";
+
+constexpr std::string_view g_XmlNodeStr = "RCNode";
+constexpr std::string_view g_XmlGraphStr = "RCGraph";
+constexpr std::string_view g_XmlTaskNodeStr = "RCTaskNode";
+constexpr std::string_view g_XmlTemplateNodeStr = "RCTemplateNode";
+constexpr std::string_view g_XmlFavoriteNodeStr = "RCFavoriteNode";
+constexpr std::string_view g_XmlEditorInfoStr = "EditorInfo";
+constexpr std::string_view g_XmlStartNodeStr = "StartNode";
+constexpr std::string_view g_XmlEndNodeStr = "EndNode";
+
+constexpr std::string_view g_XmlLinkStr = "Link";
+constexpr std::string_view g_XmlGraphLinkStr = "GraphLink";
+constexpr std::string_view g_XmlTaskListStr = "RCTaskList";
+constexpr std::string_view g_XmlNodeListStr = "RCNodeList";
+constexpr std::string_view g_XmlTaskLinkListStr = "RCTaskLinkList";
+constexpr std::string_view g_XmlNodeLinkListStr = "RCNodeLinkList";
+
+constexpr std::string_view g_XmlNodeLocationX = "LocationX";
+constexpr std::string_view g_XmlNodeLocationY = "LocationY";
+constexpr std::string_view g_XmlNodeGroupSizeX = "GroupSizeX";
+constexpr std::string_view g_XmlNodeGroupSizeY = "GroupSizeY";
+
+constexpr std::string_view g_XmlLinkProducerStr = "Producer";
+constexpr std::string_view g_XmlLinkConsumerStr = "Consumer";
+constexpr std::string_view g_XmlInputOutputListStr = "InputOutputList";
+constexpr std::string_view g_XmlInputListStr = "InputList";
+constexpr std::string_view g_XmlOutputListStr = "OutputList";
+constexpr std::string_view g_XmlInputOutputStr = "InputOutput";
+constexpr std::string_view g_XmlInputStr = "Input";
+constexpr std::string_view g_XmlOutputStr = "Output";
+constexpr std::string_view g_XmlTemplateParamListStr = "TemplateParamList";
+constexpr std::string_view g_XmlParamListStr = "ParamList";
+constexpr std::string_view g_XmlParamStr = "Param";
+
+constexpr std::string_view g_XmlNameStr = "Name";
+constexpr std::string_view g_XmlNodeNameStr = "NodeName";
+constexpr std::string_view g_XmlNodeIDStr = "NodeID";
+constexpr std::string_view g_XmlParentIDStr = "ParentNodeID";
+constexpr std::string_view g_XmlRelativeIDStr = "RelativeNodeID";
+constexpr std::string_view g_XmlLocationXStr = "LocationX";
+constexpr std::string_view g_XmlLocationYStr = "LocationY";
+constexpr std::string_view g_XmlPinNameStr = "PinName";
+constexpr std::string_view g_XmlTemplateNameStr = "TemplateName";
+constexpr std::string_view g_XmlClassNameStr = "ClassName";
+constexpr std::string_view g_XmlQueueFamilyStr = "QueueFamily";
+constexpr std::string_view g_XmlIsDynamicInputOutputStr = "IsDynamicInputOutput";
+constexpr std::string_view g_XmlIsDynamicInputStr = "IsDynamicInput";
+constexpr std::string_view g_XmlIsDynamicOutputStr = "IsDynamicOutput";
+constexpr std::string_view g_XmlIsDynamicParamStr = "IsDynamicParam";
+constexpr std::string_view g_XmlCommentStr = "Comment";
+constexpr std::string_view g_XmlNodeTypeStr = "NodeType";
+constexpr std::string_view g_XmlNodeTagStr = "NodeTag";
+constexpr std::string_view g_XmlInputMetaDataStr = "InputMetaData";
+constexpr std::string_view g_XmlOutputMetaDataStr = "OutputMetaData";
+constexpr std::string_view g_XmlMetaDataStr = "MetaData";
+constexpr std::string_view g_XmlDataTypeStr = "DataType";
+constexpr std::string_view g_XmlAccessTypeStr = "AccessType";
+constexpr std::string_view g_XmlUseRef = "UseRef";
+constexpr std::string_view g_XmlRefKey = "RefKey";
+
+constexpr std::string_view g_XmlErrorKey = "Error";
+
 
 static inline std::string wstring2string(const std::wstring i_WStr)
 {
@@ -82,15 +144,15 @@ enum class EditorDataType : S64
 	Float,
 	String,
 	WString,
-	Vector2,
-	Vector3,
-	Vector4,
-	Matrix2,
-	Matrix3,
-	Matrix4,
+	Vector2f,
+	Vector3f,
+	Vector4f,
+	Matrix2f,
+	Matrix3f,
+	Matrix4f,
 	RCFormat,
 	Buffer,
-	Texture,
+	Image2D,
 	Count
 };
 
@@ -102,16 +164,16 @@ enum class ParamDataType : S64
 	Float,
 	String,
 	WString,
-	Vector2,
-	Vector3,
-	Vector4,
-	Matrix2,
-	Matrix3,
-	Matrix4,
+	Vector2f,
+	Vector3f,
+	Vector4f,
+	Matrix2f,
+	Matrix3f,
+	Matrix4f,
 	RCFormat,
+	VkBufferUsage,
+	VkImageUsage,
 	Count,
-	TaskQueueFamily,
-	RealCount,
 };
 
 enum class PinType : S64
@@ -136,13 +198,130 @@ enum class NodeType : S64
 	//Unknown = 0,
 	CPU,
 	GPU,
+	PS,
+	CS,
 	Start,
 	End,
 	Composite,
 	Task,
-	Favorite,
+	Data,
 	Count,
 };
+
+enum class NodeTag : S64
+{
+	NoTag = 1 << 0,
+	Host = 1 << 1,
+	Vulkan = 1 << 2,
+	Block = 1 << 3,
+};
+
+enum class VkBufferUsage
+{
+	VK_BUFFER_USAGE_TRANSFER_SRC_BIT = 0x00000001,
+	VK_BUFFER_USAGE_TRANSFER_DST_BIT = 0x00000002,
+	VK_BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT = 0x00000004,
+	VK_BUFFER_USAGE_STORAGE_TEXEL_BUFFER_BIT = 0x00000008,
+	VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT = 0x00000010,
+	VK_BUFFER_USAGE_STORAGE_BUFFER_BIT = 0x00000020,
+	VK_BUFFER_USAGE_INDEX_BUFFER_BIT = 0x00000040,
+	VK_BUFFER_USAGE_VERTEX_BUFFER_BIT = 0x00000080,
+	VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT = 0x00000100,
+	VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT = 0x00020000,
+	VK_BUFFER_USAGE_VIDEO_DECODE_SRC_BIT_KHR = 0x00002000,
+	VK_BUFFER_USAGE_VIDEO_DECODE_DST_BIT_KHR = 0x00004000,
+	VK_BUFFER_USAGE_TRANSFORM_FEEDBACK_BUFFER_BIT_EXT = 0x00000800,
+	VK_BUFFER_USAGE_TRANSFORM_FEEDBACK_COUNTER_BUFFER_BIT_EXT = 0x00001000,
+	VK_BUFFER_USAGE_CONDITIONAL_RENDERING_BIT_EXT = 0x00000200,
+	VK_BUFFER_USAGE_EXECUTION_GRAPH_SCRATCH_BIT_AMDX = 0x02000000,
+	VK_BUFFER_USAGE_ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY_BIT_KHR = 0x00080000,
+	VK_BUFFER_USAGE_ACCELERATION_STRUCTURE_STORAGE_BIT_KHR = 0x00100000,
+	VK_BUFFER_USAGE_SHADER_BINDING_TABLE_BIT_KHR = 0x00000400,
+	VK_BUFFER_USAGE_VIDEO_ENCODE_DST_BIT_KHR = 0x00008000,
+	VK_BUFFER_USAGE_VIDEO_ENCODE_SRC_BIT_KHR = 0x00010000,
+	VK_BUFFER_USAGE_SAMPLER_DESCRIPTOR_BUFFER_BIT_EXT = 0x00200000,
+	VK_BUFFER_USAGE_RESOURCE_DESCRIPTOR_BUFFER_BIT_EXT = 0x00400000,
+	VK_BUFFER_USAGE_PUSH_DESCRIPTORS_DESCRIPTOR_BUFFER_BIT_EXT = 0x04000000,
+	VK_BUFFER_USAGE_MICROMAP_BUILD_INPUT_READ_ONLY_BIT_EXT = 0x00800000,
+	VK_BUFFER_USAGE_MICROMAP_STORAGE_BIT_EXT = 0x01000000,
+	VK_BUFFER_USAGE_RAY_TRACING_BIT_NV = VK_BUFFER_USAGE_SHADER_BINDING_TABLE_BIT_KHR,
+	VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT_EXT = VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT,
+	VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT_KHR = VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT,
+	VK_BUFFER_USAGE_FLAG_BITS_MAX_ENUM = 0x7FFFFFFF
+};
+
+// 按位操作符重载
+constexpr VkBufferUsage operator|(VkBufferUsage lhs, VkBufferUsage rhs) {
+	return static_cast<VkBufferUsage>(static_cast<uint32_t>(lhs) | static_cast<uint32_t>(rhs));
+}
+
+constexpr VkBufferUsage operator&(VkBufferUsage lhs, VkBufferUsage rhs) {
+	return static_cast<VkBufferUsage>(static_cast<uint32_t>(lhs) & static_cast<uint32_t>(rhs));
+}
+
+constexpr VkBufferUsage operator^(VkBufferUsage lhs, VkBufferUsage rhs) {
+	return static_cast<VkBufferUsage>(static_cast<uint32_t>(lhs) ^ static_cast<uint32_t>(rhs));
+}
+
+constexpr VkBufferUsage operator~(VkBufferUsage flag) {
+	return static_cast<VkBufferUsage>(~static_cast<uint32_t>(flag));
+}
+
+enum class VkImageUsage {
+	VK_IMAGE_USAGE_TRANSFER_SRC_BIT = 0x00000001,
+	VK_IMAGE_USAGE_TRANSFER_DST_BIT = 0x00000002,
+	VK_IMAGE_USAGE_SAMPLED_BIT = 0x00000004,
+	VK_IMAGE_USAGE_STORAGE_BIT = 0x00000008,
+	VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT = 0x00000010,
+	VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT = 0x00000020,
+	VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT = 0x00000040,
+	VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT = 0x00000080,
+	// Provided by VK_KHR_video_decode_queue
+	VK_IMAGE_USAGE_VIDEO_DECODE_DST_BIT_KHR = 0x00000400,
+	// Provided by VK_KHR_video_decode_queue
+	VK_IMAGE_USAGE_VIDEO_DECODE_SRC_BIT_KHR = 0x00000800,
+	// Provided by VK_KHR_video_decode_queue
+	VK_IMAGE_USAGE_VIDEO_DECODE_DPB_BIT_KHR = 0x00001000,
+	// Provided by VK_EXT_fragment_density_map
+	VK_IMAGE_USAGE_FRAGMENT_DENSITY_MAP_BIT_EXT = 0x00000200,
+	// Provided by VK_KHR_fragment_shading_rate
+	VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR = 0x00000100,
+	// Provided by VK_EXT_host_image_copy
+	VK_IMAGE_USAGE_HOST_TRANSFER_BIT_EXT = 0x00400000,
+	// Provided by VK_KHR_video_encode_queue
+	VK_IMAGE_USAGE_VIDEO_ENCODE_DST_BIT_KHR = 0x00002000,
+	// Provided by VK_KHR_video_encode_queue
+	VK_IMAGE_USAGE_VIDEO_ENCODE_SRC_BIT_KHR = 0x00004000,
+	// Provided by VK_KHR_video_encode_queue
+	VK_IMAGE_USAGE_VIDEO_ENCODE_DPB_BIT_KHR = 0x00008000,
+	// Provided by VK_EXT_attachment_feedback_loop_layout
+	VK_IMAGE_USAGE_ATTACHMENT_FEEDBACK_LOOP_BIT_EXT = 0x00080000,
+	// Provided by VK_HUAWEI_invocation_mask
+	VK_IMAGE_USAGE_INVOCATION_MASK_BIT_HUAWEI = 0x00040000,
+	// Provided by VK_QCOM_image_processing
+	VK_IMAGE_USAGE_SAMPLE_WEIGHT_BIT_QCOM = 0x00100000,
+	// Provided by VK_QCOM_image_processing
+	VK_IMAGE_USAGE_SAMPLE_BLOCK_MATCH_BIT_QCOM = 0x00200000,
+	// Provided by VK_NV_shading_rate_image
+	VK_IMAGE_USAGE_SHADING_RATE_IMAGE_BIT_NV = VK_IMAGE_USAGE_FRAGMENT_SHADING_RATE_ATTACHMENT_BIT_KHR,
+};
+
+// 按位操作符重载
+constexpr VkImageUsage operator|(VkImageUsage lhs, VkImageUsage rhs) {
+	return static_cast<VkImageUsage>(static_cast<uint32_t>(lhs) | static_cast<uint32_t>(rhs));
+}
+
+constexpr VkImageUsage operator&(VkImageUsage lhs, VkImageUsage rhs) {
+	return static_cast<VkImageUsage>(static_cast<uint32_t>(lhs) & static_cast<uint32_t>(rhs));
+}
+
+constexpr VkImageUsage operator^(VkImageUsage lhs, VkImageUsage rhs) {
+	return static_cast<VkImageUsage>(static_cast<uint32_t>(lhs) ^ static_cast<uint32_t>(rhs));
+}
+
+constexpr VkImageUsage operator~(VkImageUsage flag) {
+	return static_cast<VkImageUsage>(~static_cast<uint32_t>(flag));
+}
 
 enum class RCFormat : S64
 {
@@ -423,63 +602,140 @@ enum class RCFormat : S64
 
 enum class TaskQueueFamily : S64
 {
-	Graphic,
-	Compute,
+	Graphic1,
+	Graphic2,
+	Compute1,
+	Compute2,
 	Transfer,
 	Count
+};
+
+enum class TaskThread : S64
+{
+	Thread1,
+	Thread2,
+	Thread3,
+	Thread4,
+	Thread5,
+	Count
+};
+
+enum class TaskBlock : S64
+{
+	Block,
+	//HostBlock,
+	//VulkanBlock,
+	Count
+};
+
+enum class Prototype
+{
+	Template,
+	FavoriteNormalNode,
+	FavoriteChildNode,
+	FavoriteCompositeNode,
+	Count,
+};
+
+enum class SearchType
+{
+	Node,
+	Template,
+	//Tag,
+	Count,
+};
+
+enum class LinkType
+{
+	Success = 0,
+	SamePin,
+	SameNode,
+	PinTypeDifferent,
+	DataTypeDifferent,
+	MetaDataDifferent,
+	PinAccessTypeError,
+	TaskPinAccessTypeError,
+
+	LinkTypeCount,
+};
+
+enum class WidgetTypeInt
+{
+	None = 0,
+	Slider,
+	Count,
+};
+
+enum class WidgetTypeFloat
+{
+	None = 0,
+	Slider,
+	Count,
+};
+
+enum class WidgetTypeString
+{
+	None = 0,
+	File,
+	Dir,
+	Count,
+};
+
+enum class WidgetTypeWString
+{
+	None = 0,
+	File,
+	Dir,
+	Count,
+};
+
+enum class WidgetTypeVector3f
+{
+	None = 0,
+	ColorPick,
+	Count,
+};
+
+enum class WidgetTypeVector4f
+{
+	None = 0,
+	ColorPick,
+	Count,
 };
 
 enum class EnumName
 {
 	ENUM_NAME_UNKNOWN = 0,
-	RCFormat = 1,
-	NodeType = 2,
-	PinType = 3,
-	PinAccessType = 4,
-	EditorDataType = 5,
-	ParamDataType = 6,
-	TaskQueueFamily = 7
+	VkBufferUsage,
+	VkImageUsage,
+	RCFormat,
+	NodeType,
+	PinType,
+	PinAccessType,
+	EditorDataType,
+	ParamDataType,
+	TaskQueueFamily,
+	TaskThread,
+	TaskBlock,
+	Prototype,
+	SearchType,
+	NodeTag,
+	WidgetTypeInt,
+	WidgetTypeFloat,
+	WidgetTypeString,
+	WidgetTypeWString,
+	WidgetTypeVector3f,
+	WidgetTypeVector4f,
 };
 
 struct EnumType
 {
-	void setEnumName(const std::string& i_Name) noexcept { m_Name = magic_enum::enum_cast<EnumName>(i_Name).value(); }
-	EnumName getEnumName() const noexcept { return m_Name; }
+	void setTypeName(const std::string& i_Name) noexcept { m_Name = magic_enum::enum_cast<EnumName>(i_Name).value(); }
+	EnumName getTypeName() const noexcept { return m_Name; }
 	S64	enumValue() const noexcept { return m_Value; }
 
 	template <typename T>
-	T getEnum(const std::string& i_Str) const noexcept { return magic_enum::enum_cast<T>(i_Str);}
-
-	std::string enumValueStr() const noexcept
-	{
-		std::string l_Str = "";
-		switch (m_Name)
-		{
-		case EnumName::RCFormat:
-			l_Str = magic_enum::enum_name((static_cast<RCFormat>(m_Value))).data();
-			break;
-		case EnumName::NodeType:
-			l_Str = magic_enum::enum_name((static_cast<NodeType>(m_Value))).data();
-			break;
-		case EnumName::PinType:
-			l_Str = magic_enum::enum_name((static_cast<PinType>(m_Value))).data();
-			break;
-		case EnumName::PinAccessType:
-			l_Str = magic_enum::enum_name((static_cast<PinAccessType>(m_Value))).data();
-			break;
-		case EnumName::EditorDataType:
-			l_Str = magic_enum::enum_name((static_cast<EditorDataType>(m_Value))).data();
-			break;
-		case EnumName::ParamDataType:
-			l_Str = magic_enum::enum_name((static_cast<ParamDataType>(m_Value))).data();
-			break;
-		case EnumName::TaskQueueFamily:
-			l_Str = magic_enum::enum_name((static_cast<TaskQueueFamily>(m_Value))).data();
-			break;
-		}
-
-		return l_Str;
-	}
+	T getEnum(const std::string& i_Str) const noexcept { return magic_enum::enum_cast<T>(i_Str); }
 
 	std::vector<std::string> enumValueStrVector() noexcept
 	{
@@ -563,12 +819,178 @@ struct EnumType
 			return l_Result;
 			break;
 		}
+		case EnumName::TaskThread:
+		{
+			U32 l_Count = static_cast<U32>(TaskThread::Count);
+			l_Result.reserve(l_Count);
+			for (U32 i = 0; i < l_Count; ++i)
+			{
+				l_Result.emplace_back(magic_enum::enum_name((static_cast<TaskThread>(i))).data());
+			}
+			return l_Result;
+			break;
+		}
+		case EnumName::TaskBlock:
+		{
+			U32 l_Count = static_cast<U32>(TaskBlock::Count);
+			l_Result.reserve(l_Count);
+			for (U32 i = 0; i < l_Count; ++i)
+			{
+				l_Result.emplace_back(magic_enum::enum_name((static_cast<TaskBlock>(i))).data());
+			}
+			return l_Result;
+			break;
+		}
+		case EnumName::SearchType:
+		{
+			U32 l_Count = static_cast<U32>(SearchType::Count);
+			l_Result.reserve(l_Count);
+			for (U32 i = 0; i < l_Count; ++i)
+			{
+				l_Result.emplace_back(magic_enum::enum_name((static_cast<SearchType>(i))).data());
+			}
+			return l_Result;
+			break;
+		}
+		case EnumName::WidgetTypeInt:
+		{
+			U32 l_Count = static_cast<U32>(WidgetTypeInt::Count);
+			l_Result.reserve(l_Count);
+			for (U32 i = 0; i < l_Count; ++i)
+			{
+				l_Result.emplace_back(magic_enum::enum_name((static_cast<WidgetTypeInt>(i))).data());
+			}
+			return l_Result;
+			break;
+		}
+		case EnumName::WidgetTypeFloat:
+		{
+			U32 l_Count = static_cast<U32>(WidgetTypeFloat::Count);
+			l_Result.reserve(l_Count);
+			for (U32 i = 0; i < l_Count; ++i)
+			{
+				l_Result.emplace_back(magic_enum::enum_name((static_cast<WidgetTypeFloat>(i))).data());
+			}
+			return l_Result;
+			break;
+		}
+		case EnumName::WidgetTypeString:
+		{
+			U32 l_Count = static_cast<U32>(WidgetTypeString::Count);
+			l_Result.reserve(l_Count);
+			for (U32 i = 0; i < l_Count; ++i)
+			{
+				l_Result.emplace_back(magic_enum::enum_name((static_cast<WidgetTypeString>(i))).data());
+			}
+			return l_Result;
+			break;
+		}
+		case EnumName::WidgetTypeWString:
+		{
+			U32 l_Count = static_cast<U32>(WidgetTypeWString::Count);
+			l_Result.reserve(l_Count);
+			for (U32 i = 0; i < l_Count; ++i)
+			{
+				l_Result.emplace_back(magic_enum::enum_name((static_cast<WidgetTypeWString>(i))).data());
+			}
+			return l_Result;
+			break;
+		}
+		case EnumName::WidgetTypeVector3f:
+		{
+			U32 l_Count = static_cast<U32>(WidgetTypeVector3f::Count);
+			l_Result.reserve(l_Count);
+			for (U32 i = 0; i < l_Count; ++i)
+			{
+				l_Result.emplace_back(magic_enum::enum_name((static_cast<WidgetTypeVector3f>(i))).data());
+			}
+			return l_Result;
+			break;
+		}
+		case EnumName::WidgetTypeVector4f:
+		{
+			U32 l_Count = static_cast<U32>(WidgetTypeVector4f::Count);
+			l_Result.reserve(l_Count);
+			for (U32 i = 0; i < l_Count; ++i)
+			{
+				l_Result.emplace_back(magic_enum::enum_name((static_cast<WidgetTypeVector4f>(i))).data());
+			}
+			return l_Result;
+			break;
+		}
 		default:
 			assert(false);
 			break;
 		}
 
 		return l_Result;
+	}
+
+	std::string enumValueStr() const noexcept
+	{
+		std::string l_Str = "";
+		switch (m_Name)
+		{
+		case EnumName::VkBufferUsage:
+			l_Str = magic_enum::enum_flags_name((static_cast<VkBufferUsage>(m_Value))).data();
+			break;
+		case EnumName::VkImageUsage:
+			l_Str = magic_enum::enum_flags_name((static_cast<VkImageUsage>(m_Value))).data();
+			break;
+		case EnumName::RCFormat:
+			l_Str = magic_enum::enum_name((static_cast<RCFormat>(m_Value))).data();
+			break;
+		case EnumName::NodeType:
+			l_Str = magic_enum::enum_name((static_cast<NodeType>(m_Value))).data();
+			break;
+		case EnumName::PinType:
+			l_Str = magic_enum::enum_name((static_cast<PinType>(m_Value))).data();
+			break;
+		case EnumName::PinAccessType:
+			l_Str = magic_enum::enum_name((static_cast<PinAccessType>(m_Value))).data();
+			break;
+		case EnumName::EditorDataType:
+			l_Str = magic_enum::enum_name((static_cast<EditorDataType>(m_Value))).data();
+			break;
+		case EnumName::ParamDataType:
+			l_Str = magic_enum::enum_name((static_cast<ParamDataType>(m_Value))).data();
+			break;
+		case EnumName::TaskQueueFamily:
+			l_Str = magic_enum::enum_name((static_cast<TaskQueueFamily>(m_Value))).data();
+			break;
+		case EnumName::TaskThread:
+			l_Str = magic_enum::enum_name((static_cast<TaskThread>(m_Value))).data();
+			break;
+		case EnumName::TaskBlock:
+			l_Str = magic_enum::enum_name((static_cast<TaskBlock>(m_Value))).data();
+			break;
+		case EnumName::Prototype:
+			l_Str = magic_enum::enum_name((static_cast<Prototype>(m_Value))).data();
+			break;
+		case EnumName::NodeTag:
+			l_Str = magic_enum::enum_flags_name((static_cast<NodeTag>(m_Value))).data();
+			break;
+		case EnumName::WidgetTypeInt:
+			l_Str = magic_enum::enum_name((static_cast<WidgetTypeInt>(m_Value))).data();
+			break;
+		case EnumName::WidgetTypeFloat:
+			l_Str = magic_enum::enum_name((static_cast<WidgetTypeFloat>(m_Value))).data();
+			break;
+		case EnumName::WidgetTypeString:
+			l_Str = magic_enum::enum_name((static_cast<WidgetTypeString>(m_Value))).data();
+			break;
+		case EnumName::WidgetTypeWString:
+			l_Str = magic_enum::enum_name((static_cast<WidgetTypeWString>(m_Value))).data();
+			break;
+		case EnumName::WidgetTypeVector3f:
+			l_Str = magic_enum::enum_name((static_cast<WidgetTypeVector3f>(m_Value))).data();
+			break;
+		case EnumName::WidgetTypeVector4f:
+			l_Str = magic_enum::enum_name((static_cast<WidgetTypeVector4f>(m_Value))).data();
+			break;
+		}
+
+		return l_Str;
 	}
 
 	std::string	enumAllTypeStr() noexcept
@@ -595,6 +1017,18 @@ struct EnumType
 	{
 		switch (m_Name)
 		{
+		case EnumName::VkBufferUsage:
+		{
+			auto l_Value = magic_enum::enum_flags_cast<VkBufferUsage>(i_String);
+			m_Value = static_cast<S64>(l_Value.value());
+		}
+		break;
+		case EnumName::VkImageUsage:
+		{
+			auto l_Value = magic_enum::enum_flags_cast<VkImageUsage>(i_String);
+			m_Value = static_cast<S64>(l_Value.value());
+		}
+		break;
 		case EnumName::RCFormat:
 		{
 			auto l_Value = magic_enum::enum_cast<RCFormat>(i_String);
@@ -637,6 +1071,66 @@ struct EnumType
 			m_Value = static_cast<S64>(l_Value.value());
 		}
 		break;
+		case EnumName::TaskThread:
+		{
+			auto l_Value = magic_enum::enum_cast<TaskThread>(i_String);
+			m_Value = static_cast<S64>(l_Value.value());
+		}
+		break;
+		case EnumName::TaskBlock:
+		{
+			auto l_Value = magic_enum::enum_cast<TaskBlock>(i_String);
+			m_Value = static_cast<S64>(l_Value.value());
+		}
+		break;
+		case EnumName::Prototype:
+		{
+			auto l_Value = magic_enum::enum_cast<Prototype>(i_String);
+			m_Value = static_cast<S64>(l_Value.value());
+		}
+		break;
+		case EnumName::NodeTag:
+		{
+			auto l_Value = magic_enum::enum_flags_cast<NodeTag>(i_String);
+			m_Value = static_cast<S64>(l_Value.value());
+		}
+		break;
+		case EnumName::WidgetTypeInt:
+		{
+			auto l_Value = magic_enum::enum_cast<WidgetTypeInt>(i_String);
+			m_Value = static_cast<S64>(l_Value.value());
+		}
+		break;
+		case EnumName::WidgetTypeFloat:
+		{
+			auto l_Value = magic_enum::enum_cast<WidgetTypeFloat>(i_String);
+			m_Value = static_cast<S64>(l_Value.value());
+		}
+		break;
+		case EnumName::WidgetTypeString:
+		{
+			auto l_Value = magic_enum::enum_cast<WidgetTypeString>(i_String);
+			m_Value = static_cast<S64>(l_Value.value());
+		}
+		break;
+		case EnumName::WidgetTypeWString:
+		{
+			auto l_Value = magic_enum::enum_cast<WidgetTypeWString>(i_String);
+			m_Value = static_cast<S64>(l_Value.value());
+		}
+		break;
+		case EnumName::WidgetTypeVector3f:
+		{
+			auto l_Value = magic_enum::enum_cast<WidgetTypeVector3f>(i_String);
+			m_Value = static_cast<S64>(l_Value.value());
+		}
+		break;
+		case EnumName::WidgetTypeVector4f:
+		{
+			auto l_Value = magic_enum::enum_cast<WidgetTypeVector4f>(i_String);
+			m_Value = static_cast<S64>(l_Value.value());
+		}
+		break;
 		default:
 			break;
 		}
@@ -670,751 +1164,57 @@ struct EnumType
 		return !(*this == i_EnumType);
 	}
 
+	template <typename T>
+	bool operator&(T i_Vaule)
+	{
+		return m_Value & static_cast<S64>(i_Vaule);
+	}
+
 	EnumName m_Name = EnumName::ENUM_NAME_UNKNOWN;
 	S64 m_Value = 0;
 };
 
-enum PinInfoChangeFlags_
-{
-	PinInfoChangeFlags_None = 0,
-	PinInfoChangeFlags_NameChange		= 1 << 1,
-	PinInfoChangeFlags_MetaChange		= 1 << 2,
-	PinInfoChangeFlags_DataType			= 1 << 3,   
-	PinInfoChangeFlags_PinAccessType	= 1 << 4,
-};
-
-typedef U32 PinInfoChangeFlags;
-
-//struct EditorParamData
-//{
-//	std::variant<std::monostate, S32, Bool, EnumType, F32, std::string, std::wstring,
-//		Vector2f, Vector3f, Vector4f, Matrix2f, Matrix3f, Matrix4f> m_Value{};
-//
-//	template <typename T>
-//	static inline std::string eigenMatrix2Str(const T& i_Data, Eigen::IOFormat l_Format = Eigen::IOFormat(Eigen::FullPrecision, 4, ",", ",", "", "", "", ""))
-//	{
-//		std::stringstream l_StrStream{};
-//		l_StrStream << i_Data.format(l_Format);
-//		return l_StrStream.str();
-//	}
-//
-//	template <typename T>
-//	static inline T str2EigenMatrix(const std::string& i_Str, Eigen::IOFormat l_Format = Eigen::IOFormat(Eigen::FullPrecision, 4, ",", "\n", "[", "]", "[", "]"))
-//	{
-//		std::stringstream l_StrStream(i_Str);
-//		std::string l_Line{};
-//		T l_Data{};
-//
-//		U32 l_Index = 0;
-//		while (std::getline(l_StrStream, l_Line, ',')) {
-//			/*l_MatrixData.push_back(std::stof(l_Line))*/
-//			l_Data(l_Index) = std::stof(l_Line);
-//			l_Index++;
-//		}
-//		return l_Data;
-//	}
-//
-//	inline std::string getData(EnumType i_DataType) const noexcept
-//	{
-//		switch (static_cast<ParamDataType>(i_DataType.m_Value))
-//		{
-//		case ParamDataType::Int: return std::to_string(std::get<S32>(m_Value));
-//		case ParamDataType::Bool: return std::to_string(std::get<Bool>(m_Value));
-//		case ParamDataType::RCFormat: 
-//		{
-//		std::string l_Str{};
-//		EnumType l_EnumTypeData = std::get<EnumType>(m_Value);
-//		l_Str = l_EnumTypeData.enumValueStr();
-//		return l_Str;
-//		}
-//		case ParamDataType::Float: return std::to_string(std::get<F32>(m_Value));
-//		case ParamDataType::String: return std::get<std::string>(m_Value);
-//		case ParamDataType::WString: return wstring2string(std::get<std::wstring>(m_Value));
-//		case ParamDataType::Vector2: return eigenMatrix2Str(std::get<Vector2f>(m_Value));
-//		case ParamDataType::Vector3: return eigenMatrix2Str(std::get<Vector3f>(m_Value));
-//		case ParamDataType::Vector4: return eigenMatrix2Str(std::get<Vector4f>(m_Value));
-//		case ParamDataType::Matrix2: return eigenMatrix2Str(std::get<Matrix2f>(m_Value));
-//		case ParamDataType::Matrix3: return eigenMatrix2Str(std::get<Matrix3f>(m_Value));
-//		case ParamDataType::Matrix4: return eigenMatrix2Str(std::get<Matrix4f>(m_Value));
-//		default: return std::string{};
-//		}
-//	}
-//
-//	inline EditorParamData setData(EnumType i_DataType, const std::string& i_ParamDataStr)
-//	{
-//		EditorParamData l_ParamData{};
-//		switch (static_cast<ParamDataType>(i_DataType.m_Value))
-//		{
-//		case ParamDataType::Int: m_Value = stoi(i_ParamDataStr); break;
-//		case ParamDataType::Bool: m_Value = static_cast<Bool>(stoi(i_ParamDataStr)); break;
-//		case ParamDataType::RCFormat: { EnumType l_EnumTypeData{}; l_EnumTypeData.setEnumName("RCFormat"); l_EnumTypeData.setEnumValue(i_ParamDataStr); m_Value = l_EnumTypeData; } break;
-//		case ParamDataType::Float: m_Value = stof(i_ParamDataStr); break;
-//		case ParamDataType::String: m_Value = i_ParamDataStr; break;
-//		case ParamDataType::WString: m_Value = string2wstring(i_ParamDataStr); break;
-//		case ParamDataType::Vector2: m_Value = str2EigenMatrix<Vector2f>(i_ParamDataStr); break;
-//		case ParamDataType::Vector3: m_Value = str2EigenMatrix<Vector3f>(i_ParamDataStr); break;
-//		case ParamDataType::Vector4: m_Value = str2EigenMatrix<Vector4f>(i_ParamDataStr); break;
-//		case ParamDataType::Matrix2: m_Value = str2EigenMatrix<Matrix2f>(i_ParamDataStr); break;
-//		case ParamDataType::Matrix3: m_Value = str2EigenMatrix<Matrix3f>(i_ParamDataStr); break;
-//		case ParamDataType::Matrix4: m_Value = str2EigenMatrix<Matrix4f>(i_ParamDataStr); break;
-//		default:;
-//		}
-//		return l_ParamData;
-//	}
-//};
-
-//struct EditorParamInfo
-//{
-//	std::string			m_Name = "";
-//	EnumType			m_DataType = { EnumName::ParamDataType, static_cast<S64>(EditorDataType::Int) };
-//	EditorParamData		m_Data{};
-//	Bool				m_UseRef = false;
-//	std::string			m_RefKey = "";
-//
-//	EditorParamInfo() {};
-//	EditorParamInfo(const std::string& i_Name, const EditorParamData& i_Data) : m_Name(i_Name), m_Data(i_Data) {}
-//	EditorParamInfo(const std::string& i_Name, const EnumType& i_DataType, const EditorParamData& i_Data, Bool i_UseRef, const std::string& i_RefKey) {
-//		m_Name = i_Name;
-//		m_DataType = i_DataType;
-//		m_Data = i_Data;
-//		m_UseRef = i_UseRef;
-//		m_RefKey = i_RefKey;
-//	}
-//
-//	EditorParamInfo(const EditorParamInfo& i_ParamInfo) noexcept {
-//		*this = i_ParamInfo;
-//	}
-//
-//	EditorParamInfo& operator=(const EditorParamInfo& i_ParamInfo) noexcept {
-//		m_Name = i_ParamInfo.m_Name;
-//		m_DataType = i_ParamInfo.m_DataType;
-//		m_Data = i_ParamInfo.m_Data;
-//		m_UseRef = i_ParamInfo.m_UseRef;
-//		m_RefKey = i_ParamInfo.m_RefKey;
-//
-//		return *this;
-//	}
-//
-//	void initData() {
-//		switch (static_cast<ParamDataType>(m_DataType.m_Value))
-//		{
-//		case ParamDataType::Int: { m_Data.m_Value = S32{}; } break;
-//		case ParamDataType::Bool: {m_Data.m_Value = Bool{}; } break;
-//		case ParamDataType::RCFormat: { EnumType l_EnumTypeData{}; l_EnumTypeData.setEnumName("RCFormat"); m_Data.m_Value = l_EnumTypeData; } break;
-//		case ParamDataType::Float: { m_Data.m_Value = F32{}; } break;
-//		case ParamDataType::String: { m_Data.m_Value = std::string(); } break;
-//		case ParamDataType::WString: { m_Data.m_Value = std::wstring(); } break;
-//		case ParamDataType::Vector2: { m_Data.m_Value = static_cast<Vector2f>(Vector2f::Zero()); } break;
-//		case ParamDataType::Vector3: { m_Data.m_Value = static_cast<Vector3f>(Vector3f::Zero()); } break;
-//		case ParamDataType::Vector4: { m_Data.m_Value = static_cast<Vector4f>(Vector4f::Zero()); } break;
-//		case ParamDataType::Matrix2: { m_Data.m_Value = static_cast<Matrix2f>(Matrix2f::Identity()); } break;
-//		case ParamDataType::Matrix3: { m_Data.m_Value = static_cast<Matrix3f>(Matrix3f::Identity()); } break;
-//		case ParamDataType::Matrix4: { m_Data.m_Value = static_cast<Matrix4f>(Matrix4f::Identity()); } break;
-//		default:;
-//		}
-//	}
-//
-//	void setData(const std::string& i_Key, const std::string& i_Value)
-//	{
-//		if (i_Key == "Name")
-//			m_Name = i_Value;
-//		else if (i_Key == "DataType")
-//			m_DataType.setEnumValue(i_Value);
-//		else if (i_Key == "Data")
-//			m_Data.setData(m_DataType, i_Value);
-//		else if (i_Key == "UseRef")
-//			m_UseRef = static_cast<Bool>(stoi(i_Value));
-//		else if (i_Key == "RefKey")
-//			m_RefKey = m_RefKey;
-//	}
-//
-//	std::string getData(const std::string& i_Key)
-//	{
-//		if (i_Key == "Name")
-//			return m_Name;
-//		else if (i_Key == "DataType")
-//			return m_DataType.enumValueStr();
-//		else if (i_Key == "Data")
-//			return m_Data.getData(m_DataType);
-//		else if (i_Key == "UseRef")
-//			return std::to_string(m_UseRef);
-//		else if (i_Key == "RefKey")
-//			return  m_RefKey;
-//
-//		return "";
-//	}
-//};
-
-static inline GUID createGuid()
-{
-	GUID l_Guid;
-	CoCreateGuid(&l_Guid);
-	return l_Guid;
-}
-
-static inline std::string guidToString(const GUID& i_Guid)
-{
-	char l_Buf[64] = { 0 };
-	_snprintf_s(
-		l_Buf,
-		sizeof(l_Buf),
-		"{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}",
-		i_Guid.Data1, i_Guid.Data2, i_Guid.Data3,
-		i_Guid.Data4[0], i_Guid.Data4[1],
-		i_Guid.Data4[2], i_Guid.Data4[3],
-		i_Guid.Data4[4], i_Guid.Data4[5],
-		i_Guid.Data4[6], i_Guid.Data4[7]);
-	return std::string(l_Buf);
-}
-
-//class Node;
-//
-//struct PinInfo
-//{
-//	friend class Pin;
-//	friend class NodeManager;
-//
-//public:
-//	PinInfo() noexcept {}
-//	PinInfo(const NodeID i_NodeID, const PinInfo& i_Info) noexcept {
-//		*this = i_Info;
-//		m_NodeID = i_NodeID;
-//	}
-//	PinInfo(const std::string_view i_Name, const std::string_view i_MetaData, EditorDataType i_DataType, PinType i_PinType, PinAccessType i_AccessFlags) noexcept {
-//		m_Name = i_Name;
-//		m_MetaData = i_MetaData;
-//		m_DataType = i_DataType;
-//		m_PinType = i_PinType;
-//		m_PinAccessType = i_AccessFlags;
-//	}
-//
-//	PinInfo& operator=(const PinInfo& i_Info) noexcept {
-//		m_Name = i_Info.m_Name;
-//		m_MetaData = i_Info.m_MetaData;
-//		m_DataType = i_Info.m_DataType;
-//		m_PinType = i_Info.m_PinType;
-//		m_PinAccessType = i_Info.m_PinAccessType;
-//		m_IsTemplate = i_Info.m_IsTemplate;
-//		m_IsConnection = i_Info.m_IsConnection;
-//
-//		return *this;
-//	}
-//
-//	template<typename T>
-//	void setData(const std::string& i_Key, const T& i_Value)
-//	{
-//		if (i_Key == "Name")
-//			m_Name = i_Value;
-//		else if (i_Key == "MetaData")
-//			m_MetaData = i_Value;
-//		else if (i_Key == "PinAccessType")
-//			m_PinAccessType.setEnumValue(i_Value);
-//		else if (i_Key == "DataType")
-//			m_DataType.setEnumValue(i_Value);
-//	}
-//
-//	std::string getData(const std::string& i_Key)
-//	{
-//		if (i_Key == "Name")
-//			return m_Name;
-//		else if (i_Key == "MetaData")
-//			return m_MetaData;
-//		else if (i_Key == "PinAccessType")
-//			return m_PinAccessType.enumValueStr();
-//		else if (i_Key == "DataType")
-//			return m_DataType.enumValueStr();
-//
-//		return "";
-//	}
-//
-//	static ImColor getPinColor(PinAccessType i_Type) noexcept
-//	{
-//		switch (i_Type)
-//		{
-//		case PinAccessType::Readable: return ImColor(118, 185, 0, 255);
-//		case PinAccessType::Writable: return ImColor(237, 34, 36, 255);
-//		}
-//
-//		assert(false);
-//		return ImColor(255, 255, 255);
-//	}
-//
-//	ImColor	color() noexcept { return getPinColor(static_cast<PinAccessType>(m_PinAccessType.m_Value)); }
-//
-//	std::string			m_Name = "";
-//	std::string			m_MetaData = "";
-//	NodeID				m_NodeID = 0;
-//	std::set<LinkID>    m_LinkIDSet{};
-//	//EditorParamData     m_Data{};
-//
-//	Bool				m_IsTemplate = false;
-//	Bool				m_IsConnection = false;
-//	EnumType			m_DataType = { EnumName::EditorDataType, static_cast<S64>(EditorDataType::Int) };
-//	EnumType			m_PinType = { EnumName::PinType, static_cast<S64>(PinType::Input) };
-//	EnumType			m_PinAccessType = { EnumName::PinAccessType, static_cast<S64>(PinAccessType::Readable) };
-//};
-//
-//struct NodeStackInfo
-//{
-//	std::string m_StackStr = g_RootNodeStackStr;
-//	NodeID m_StartNodeID{};
-//	NodeID m_EndNodeID{};
-//	std::set<NodeID> m_NodeIDList{}; // has Start End Node 
-//	std::set<LinkID> m_LinkIDList{};
-//};
-//
-//struct NodeInfo
-//{
-//	NodeInfo() noexcept {}
-//	NodeInfo(const NodeInfo& i_Info) noexcept { *this = i_Info; }
-//
-//	NodeInfo(NodeInfo&& i_Info) noexcept {
-//		m_GUID = i_Info.m_GUID;
-//
-//		m_ParentNodeID = i_Info.m_ParentNodeID;
-//		m_Name = i_Info.m_Name;
-//		m_TemplateName = i_Info.m_TemplateName;
-//		m_ClassName = i_Info.m_ClassName;
-//		m_Comment = i_Info.m_Comment;
-//		m_Type = i_Info.m_Type;
-//
-//		m_TemplateConnectionOutputPinIDs = i_Info.m_TemplateConnectionOutputPinIDs;
-//		m_TemplateConnectionInputPinIDs = i_Info.m_TemplateConnectionInputPinIDs;
-//		m_TemplateInputPinIDs = i_Info.m_TemplateInputPinIDs;
-//		m_TemplateOutputPinIDs = i_Info.m_TemplateOutputPinIDs;
-//		m_TemplateParams = i_Info.m_TemplateParams;
-//
-//		m_IsDynamicConnectionPin = i_Info.m_IsDynamicConnectionPin;
-//		m_ConnectionOutputPinIDs = i_Info.m_ConnectionOutputPinIDs;
-//		m_ConnectionInputPinIDs = i_Info.m_ConnectionInputPinIDs;
-//		m_IsDynamicInputPin = i_Info.m_IsDynamicInputPin;
-//		m_InputPinIDs = i_Info.m_InputPinIDs;
-//		m_IsDynamicOutputPin = i_Info.m_IsDynamicOutputPin;
-//		m_OutputPinIDs = i_Info.m_OutputPinIDs;
-//		m_LinkIDSet = i_Info.m_LinkIDSet;
-//
-//		m_IsDynamicParam = i_Info.m_IsDynamicParam;
-//		m_Params = i_Info.m_Params;
-//	}
-//
-//	//NodeInfo(std::string_view i_Name, std::string_view i_ClassName, std::string_view i_Comment, NodeType i_Type, Bool i_IsDynamicInputPin, std::vector<PinID>&& i_InputPinIDs,
-//	//	Bool i_IsDynamicConnectionPin, std::vector<PinID>&& i_ConnectionInputPinIDs, std::vector<PinID>&& i_ConnectionOutputPinIDs, Bool i_IsDynamicOutputPin, std::vector<PinID>&& i_OutputPinIDs, Bool i_IsDynamicParam, std::vector<EditorParamInfo>&& i_Params) noexcept {
-//	//	m_Name = i_Name;
-//	//	m_ClassName = i_Name;
-//	//	m_Comment = i_Comment;
-//	//	m_Type = i_Type;
-//
-//	//	m_IsDynamicConnectionPin = i_IsDynamicConnectionPin;
-//	//	m_ConnectionOutputPinIDs = i_ConnectionOutputPinIDs;
-//	//	m_ConnectionInputPinIDs = i_ConnectionInputPinIDs;
-//
-//	//	m_IsDynamicInputPin = i_IsDynamicInputPin;
-//	//	m_InputPinIDs = i_InputPinIDs;
-//	//	m_IsDynamicOutputPin = i_IsDynamicOutputPin;
-//	//	m_OutputPinIDs = i_OutputPinIDs;
-//	//	m_IsDynamicParam = i_IsDynamicParam;
-//	//	m_Params = i_Params;
-//
-//	//	m_GUID = guidToString(createGuid());
-//	//}
-//
-//	NodeInfo& operator=(const NodeInfo& i_Info) noexcept {
-//		m_GUID = guidToString(createGuid());
-//
-//		m_ParentNodeID = i_Info.m_ParentNodeID;
-//		m_Name = i_Info.m_Name;
-//		m_TemplateName = i_Info.m_TemplateName;
-//		m_ClassName = i_Info.m_ClassName;
-//		m_Comment = i_Info.m_Comment;
-//		m_Type = i_Info.m_Type;
-//
-//		m_IsDynamicConnectionPin = i_Info.m_IsDynamicConnectionPin;
-//		m_IsDynamicInputPin = i_Info.m_IsDynamicInputPin;
-//		m_IsDynamicOutputPin = i_Info.m_IsDynamicOutputPin;
-//		m_IsDynamicParam = i_Info.m_IsDynamicParam;
-//		
-//		return *this; 
-//	}
-//
-//	virtual ~NodeInfo() noexcept {
-//		
-//	}
-//
-//	void setData(const std::string& i_Key, const std::string& i_Value)
-//	{
-//		if (i_Key == "NodeName")
-//			m_Name = i_Value;
-//		else if (i_Key == "TemplateName")
-//			m_TemplateName = i_Value;
-//		else if (i_Key == "ClassName")
-//			m_ClassName = i_Value;
-//		else if (i_Key == "NodeType")
-//			m_Type.setEnumValue(i_Value);
-//		else if (i_Key == "Comment")
-//			m_Comment = i_Value;
-//		else if (i_Key == "IsDynamicConnectionPin")
-//			m_IsDynamicConnectionPin = static_cast<Bool>(std::stoi(i_Value));
-//		else if (i_Key == "IsDynamicInput")
-//			m_IsDynamicInputPin = static_cast<Bool>(std::stoi(i_Value));
-//		else if (i_Key == "IsDynamicOutput")
-//			m_IsDynamicOutputPin = static_cast<Bool>(std::stoi(i_Value));
-//		else if (i_Key == "IsDynamicParam")
-//			m_IsDynamicParam = static_cast<Bool>(std::stoi(i_Value));
-//
-//		return;
-//	}
-//
-//	std::string getData(const std::string& i_Key)
-//	{
-//		if (i_Key == "NodeName")
-//			return m_Name;
-//		else if (i_Key == "TemplateName")
-//			return "";
-//		else if (i_Key == "ClassName")
-//			return m_ClassName;
-//		else if (i_Key == "NodeType")
-//			return m_Type.enumValueStr();
-//		else if (i_Key == "Comment")
-//			return m_Comment;
-//		else if (i_Key == "IsDynamicConnectionPin")
-//			return  std::to_string(m_IsDynamicConnectionPin);
-//		else if (i_Key == "IsDynamicInput")
-//			return std::to_string(m_IsDynamicInputPin);
-//		else if (i_Key == "IsDynamicOutput")
-//			return std::to_string(m_IsDynamicOutputPin);
-//		else if (i_Key == "IsDynamicParam")
-//			return std::to_string(m_IsDynamicParam);
-//
-//		return "";
-//	}
-//
-//	ImColor getNodeColor(NodeType i_Type) noexcept
-//	{
-//		auto l_Color = ImColor(255, 255, 255);
-//		switch (i_Type)
-//		{
-//		case NodeType::CPU:
-//			l_Color = ImColor(43, 162, 69);
-//			return l_Color;
-//		case NodeType::GPU:
-//			l_Color = ImColor(123, 104, 238);
-//			return l_Color;
-//		case NodeType::Start:
-//			l_Color = ImColor(12, 12, 89);
-//			return l_Color;
-//		case NodeType::End:
-//			l_Color = ImColor(12, 84, 12);
-//			return l_Color;
-//		case NodeType::Composite:
-//			l_Color = ImColor(85, 85, 12);
-//			return l_Color;
-//		default:
-//			l_Color = ImColor(255, 0, 0);
-//			break;
-//		}
-//
-//		assert(false);
-//		return l_Color;
-//	}
-//
-//	ImColor	color() noexcept { return getNodeColor(static_cast<NodeType>(m_Type.m_Value)); }
-//
-//	const std::vector<PinID>& getPinIDList(Bool i_IsTemplate, Bool i_IsConnection, const EnumType& i_PinType) const noexcept {
-//		if (i_IsTemplate) {
-//			if (i_IsConnection) {
-//				if (i_PinType == PinType::Input) {
-//					return m_TemplateConnectionInputPinIDs;
-//				}
-//				else {
-//					return m_TemplateConnectionOutputPinIDs;
-//				}
-//			}
-//			else if (i_PinType == PinType::Input) {
-//				return m_TemplateInputPinIDs;
-//			}
-//			else {
-//				return m_TemplateOutputPinIDs;
-//			}
-//		}
-//		else {
-//			if (i_IsConnection) {
-//				if (i_PinType == PinType::Input) {
-//					return m_ConnectionInputPinIDs;
-//				}
-//				else {
-//					return m_ConnectionOutputPinIDs;
-//				}
-//			}
-//			else if (i_PinType == PinType::Input) {
-//				return m_InputPinIDs;
-//			}
-//			else {
-//				return m_OutputPinIDs;
-//			}
-//		}
-//	}
-//
-//	const std::vector<PinID>& getPinIDList(const std::shared_ptr<PinInfo>& i_pPinInfo) const noexcept {
-//		return getPinIDList(i_pPinInfo->m_IsTemplate, i_pPinInfo->m_IsConnection, i_pPinInfo->m_PinType);
-//	}
-//
-//	Bool isSpecNode() noexcept { return (m_Type == NodeType::Composite || m_Type == NodeType::Start || m_Type == NodeType::End);}
-//
-//	std::string m_GUID = "";
-//
-//	NodeID m_ParentNodeID = 0;
-//	std::string	m_Name = "";
-//	std::string m_TemplateName = "";
-//	std::string m_ClassName = "";
-//	std::string	m_Comment = "";
-//	EnumType m_Type = { EnumName::NodeType, static_cast<S64>(NodeType::GPU) };
-//
-//	Bool m_IsDynamicConnectionPin = false;
-//	Bool m_IsDynamicInputPin = false;
-//	Bool m_IsDynamicOutputPin = false;
-//	Bool m_IsDynamicParam = false;
-//
-//	std::vector<PinID> m_TemplateConnectionInputPinIDs{};
-//	std::vector<PinID> m_TemplateConnectionOutputPinIDs{};
-//	std::vector<PinID> m_TemplateInputPinIDs{};
-//	std::vector<PinID> m_TemplateOutputPinIDs{};
-//	std::vector<EditorParamInfo> m_TemplateParams{};
-//
-//	std::vector<PinID> m_ConnectionInputPinIDs{};
-//	std::vector<PinID> m_ConnectionOutputPinIDs{};
-//	std::vector<PinID> m_InputPinIDs{};
-//	std::vector<PinID> m_OutputPinIDs{};
-//	std::vector<EditorParamInfo> m_Params{};
-//
-//	std::set<LinkID> m_LinkIDSet{};
-//};
-//
-//struct TaskInfo {
-//	NodeID m_StartNodeID{};
-//	NodeID m_EndNodeID{};
-//	std::set<NodeID> m_ChildNodeIDList{};
-//};
-//
-//struct LinkInfo
-//{
-//	NodeID m_OutputNodeID = 0;
-//	LinkID m_OutputPinID = 0;
-//	NodeID m_InputNodeID = 0;
-//	LinkID m_InputPinID = 0;
-//
-//	ImColor m_Color = ImColor(0.0f);
-//};
-//
-static inline bool splitter(bool split_vertically, float thickness, float* size1, float* size2, float min_size1, float min_size2, float splitter_long_axis_size = -1.0f)
+static inline bool splitter(std::string_view i_Name, bool split_vertically, float thickness, float* size1, float* size2, float min_size1, float min_size2, float splitter_long_axis_size = -1.0f)
 {
 	using namespace ImGui;
 	ImGuiContext& g = *GImGui;
 	ImGuiWindow* window = g.CurrentWindow;
-	const ImGuiID id = window->GetID("##Splitter");
+	std::string l_Name = std::string("##Splitter_") + i_Name.data();
+	const ImGuiID id = window->GetID(l_Name.c_str());
 	ImRect bb;
 	bb.Min = window->DC.CursorPos + (split_vertically ? ImVec2(*size1, 0.0f) : ImVec2(0.0f, *size1));
 	bb.Max = bb.Min + CalcItemSize(split_vertically ? ImVec2(thickness, splitter_long_axis_size) : ImVec2(splitter_long_axis_size, thickness), 0.0f, 0.0f);
 	return SplitterBehavior(bb, id, split_vertically ? ImGuiAxis_X : ImGuiAxis_Y, size1, size2, min_size1, min_size2, 0.0f);
 }
 
-//template <typename T>
-//static inline std::string serializeEigenMatrix(const T& i_Data, Eigen::IOFormat l_Format = Eigen::IOFormat(Eigen::FullPrecision, 4, ",", "", "", "", "", ""))
-//{
-//	std::stringstream l_StrStream{};
-//	l_StrStream << i_Data.format(l_Format);
-//	return l_StrStream.str();
-//}
-//
-//template <typename T>
-//static inline void parseEigenMatrix(const std::string& i_Str, T& o_Data, Eigen::IOFormat l_Format = Eigen::IOFormat(Eigen::FullPrecision, 4, ",", "\n", "[", "]", "[", "]"))
-//{
-//	std::stringstream l_StrStream(i_Str);
-//	std::string l_Line{};
-//
-//	while (std::getline(l_StrStream, l_Line, ',')) {
-//		/*l_MatrixData.push_back(std::stof(l_Line))*/
-//		o_Data << std::stof(l_Line);
-//	}
-//	return;
-//}
-//
-//static inline void serializeEditorParamData(tinyxml2::XMLElement* i_XMLElement, rceditor::EnumType i_DataType, const EditorParamData& i_Data)
-//{
-//	//i_XMLElement->SetAttribute("DataType", i_DataType.enumValueStr().c_str());
-//
-//	//switch (static_cast<ParamDataType>(i_DataType.m_Value))
-//	//{
-//	//case ParamDataType::Int:
-//	//	i_XMLElement->SetAttribute("Data", std::get<S32>(i_Data.m_Value));
-//	//	break;
-//
-//	//case ParamDataType::Bool:
-//	//	i_XMLElement->SetAttribute("Data", std::get<Bool>(i_Data.m_Value));
-//	//	break;
-//
-//	//case ParamDataType::RCFormat:
-//	//{
-//	//	i_XMLElement->SetAttribute("Data", std::get<EnumType>(i_Data.m_Value).enumNameStr().c_str());
-//	//}
-//	//	break;
-//
-//	//case ParamDataType::Float:
-//	//	i_XMLElement->SetAttribute("Data", std::get<F32>(i_Data.m_Value));
-//	//	break;
-//
-//	//case ParamDataType::String:
-//	//	i_XMLElement->SetAttribute("Data", std::get<std::string>(i_Data.m_Value).c_str());
-//	//	break;
-//
-//	//case ParamDataType::WString:
-//	//	i_XMLElement->SetAttribute("Data", std::get<std::wstring>(i_Data.m_Value).c_str());
-//	//	break;
-//
-//	//case ParamDataType::Vector2:
-//	//	i_XMLElement->SetAttribute("Data", serializeEigenMatrix(std::get<Vector2f>(i_Data.m_Value)).c_str());
-//	//	break;
-//
-//	//case ParamDataType::Vector3:
-//	//	i_XMLElement->SetAttribute("Data", serializeEigenMatrix(std::get<Vector3f>(i_Data.m_Value)).c_str());
-//	//	break;
-//
-//	//case ParamDataType::Vector4:
-//	//	i_XMLElement->SetAttribute("Data", serializeEigenMatrix(std::get<Vector4f>(i_Data.m_Value)).c_str());
-//	//	break;
-//
-//	//case ParamDataType::Matrix2:
-//	//	i_XMLElement->SetAttribute("Data", serializeEigenMatrix(std::get<Matrix2f>(i_Data.m_Value)).c_str());
-//	//	break;
-//
-//	//case ParamDataType::Matrix3:
-//	//	i_XMLElement->SetAttribute("Data", serializeEigenMatrix(std::get<Matrix3f>(i_Data.m_Value)).c_str());
-//	//	break;
-//
-//	//case ParamDataType::Matrix4:
-//	//	i_XMLElement->SetAttribute("Data", serializeEigenMatrix(std::get<Matrix4f>(i_Data.m_Value)).c_str());
-//	//	break;
-//
-//	//default:
-//	//	break;
-//	//}
-//
-//	return;
-//}
-//
-//static inline std::tuple<ParamDataType, EditorParamData> parseEditorParamData(tinyxml2::XMLElement* i_XMLElement)
-//{
-//	//tinyxml2::XMLElement* l_XmlDataType = i_XMLElement->FirstChildElement("DataType");
-//	//tinyxml2::XMLElement* l_XmlData = i_XMLElement->FirstChildElement("DataType");
-//
-//	//std::string l_DataStr{};
-//	//EditorParamData l_Data{};
-//
-//	//int l_DataTypeInt = 0;
-//	//l_XmlDataType->FindAttribute("DataType")->QueryIntValue(&l_DataTypeInt);
-//	//ParamDataType l_DataType = static_cast<ParamDataType>(l_DataTypeInt);
-//
-//	//F32 l_ValueFloat{};
-//	//Vector2f l_ValueVector2f{};
-//	//Vector3f l_ValueVector3f{};
-//	//Vector2f l_ValueVector4f{};
-//	//Matrix2f l_ValueMatrix2f{};
-//	//Matrix3f l_ValueMatrix3f{};
-//	//Matrix4f l_ValueMatrix4f{};
-//	//switch (l_DataType)
-//	//{
-//	//case ParamDataType::Int:
-//	//{
-//	//	S32 l_ValueInt{};
-//	//	l_XmlDataType->FindAttribute("Data")->QueryIntValue(&l_ValueInt);
-//	//	l_Data.m_Value = static_cast<S32>(l_ValueInt);
-//	//}
-//	//	break;
-//
-//	//case ParamDataType::Bool:
-//	//{
-//	//	Bool l_ValueBool{};
-//	//	l_XmlDataType->FindAttribute("Data")->QueryBoolValue(&l_ValueBool);
-//	//	l_Data.m_Value = l_ValueBool;
-//	//}
-//	//	break;
-//
-//	//case ParamDataType::RCFormat:
-//	//{
-//	//	EnumType l_EnumType{};
-//	//	std::string l_Str{};
-//	//	l_EnumType.setEnumName("RCFormat");
-//	//	l_EnumType.se
-//	//	l_XmlDataType->FindAttribute("EnumName")->QueryValue(&l_Str);
-//	//	l_Data.m_Value = l_EnumType;
-//	//}
-//
-//	//	break;
-//
-//	//case ParamDataType::Float:
-//	//	l_XmlDataType->FindAttribute("Data")->QueryFloatValue(&l_ValueFloat);
-//	//	l_Data.m_Value = l_ValueFloat;
-//	//	break;
-//
-//	//case ParamDataType::String:
-//	//	l_Data.m_Value = l_XmlDataType->FindAttribute("Data")->Value();
-//	//	break;
-//
-//	//case ParamDataType::WString:
-//	//	l_Data.m_Value = l_XmlDataType->FindAttribute("Data")->Value();
-//	//	break;
-//
-//	//case ParamDataType::Vector2:
-//	//	parseEigenMatrix(l_XmlDataType->FindAttribute("Data")->Value(), l_ValueVector2f);
-//	//	l_Data.m_Value = l_ValueVector2f;
-//	//	break;
-//
-//	//case ParamDataType::Vector3:
-//	//	parseEigenMatrix(l_XmlDataType->FindAttribute("Data")->Value(), l_ValueVector3f);
-//	//	l_Data.m_Value = l_ValueVector3f;
-//	//	break;
-//
-//	//case ParamDataType::Vector4:
-//	//	parseEigenMatrix(l_XmlDataType->FindAttribute("Data")->Value(), l_ValueVector4f);
-//	//	l_Data.m_Value = l_ValueVector4f;
-//	//	break;
-//
-//	//case ParamDataType::Matrix2:
-//	//	parseEigenMatrix(l_XmlDataType->FindAttribute("Data")->Value(), l_ValueMatrix2f);
-//	//	l_Data.m_Value = l_ValueMatrix2f;
-//	//	break;
-//
-//	//case ParamDataType::Matrix3:
-//	//	parseEigenMatrix(l_XmlDataType->FindAttribute("Data")->Value(), l_ValueMatrix3f);
-//	//	l_Data.m_Value = l_ValueMatrix3f;
-//	//	break;
-//
-//	//case ParamDataType::Matrix4:
-//	//	parseEigenMatrix(l_XmlDataType->FindAttribute("Data")->Value(), l_ValueMatrix4f);
-//	//	l_Data.m_Value = l_ValueMatrix4f;
-//	//	break;
-//
-//	//default:
-//	//	break;
-//	//}
-//
-//	//return { l_DataType, l_Data };
-//	return {};
-//}
+static std::string toLower(std::string s)
+{
+	std::transform(s.begin(), s.end(), s.begin(),
+		[](unsigned char c) { return std::tolower(c); }
+	);
+	return s;
+}
 
-//NodeID getNodeID(U32 i_Index) noexcept { return NODE_ID_OFFSET + i_Index; }
-//U32 getNodeIndex(NodeID i_ID) noexcept { return i_ID - NODE_ID_OFFSET; }
+//static inline GUID createGuid()
+//{
+//	GUID l_Guid;
+//	CoCreateGuid(&l_Guid);
+//	return l_Guid;
+//}
 //
-//LinkID getLinkID(U32 i_Index) noexcept { return LINK_ID_OFFSET + i_Index; }
-//U32 getLinkIndex(LinkID i_ID) noexcept { return i_ID - LINK_ID_OFFSET; }
-//
-//PinID getPinID(const PinIDInfo& l_PinIDInfo) noexcept { return l_PinIDInfo.m_NodeID * PIN_BITS + static_cast<U32>(l_PinIDInfo.m_PinType) * PIN_TYPE_BITS + l_PinIDInfo.m_PinIndex; };
-//PinIDInfo getPinIDInfo(PinID i_PinID) noexcept {
-//	PinIDInfo l_PinInfo{};
-//	l_PinInfo.m_NodeID = static_cast<U64>(i_PinID / PIN_BITS);
-//	l_PinInfo.m_PinIndex = static_cast<U64>(i_PinID / PIN_TYPE_BITS);
-//	l_PinInfo.m_PinType = static_cast<PinType>((i_PinID - l_PinInfo.m_NodeID - l_PinInfo.m_PinIndex) / PIN_TYPE_BITS);
-//
-//	return l_PinInfo;
+//static inline std::string guidToString(const GUID& i_Guid)
+//{
+//	char l_Buf[64] = { 0 };
+//	_snprintf_s(
+//		l_Buf,
+//		sizeof(l_Buf),
+//		"{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}",
+//		i_Guid.Data1, i_Guid.Data2, i_Guid.Data3,
+//		i_Guid.Data4[0], i_Guid.Data4[1],
+//		i_Guid.Data4[2], i_Guid.Data4[3],
+//		i_Guid.Data4[4], i_Guid.Data4[5],
+//		i_Guid.Data4[6], i_Guid.Data4[7]);
+//	return std::string(l_Buf);
 //}
 
 RCEDITOR_NAMESPACE_END

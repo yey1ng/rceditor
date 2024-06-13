@@ -1,0 +1,15 @@
+<Node NodeName="GetTextureInfoFrom3" ClassName="GetTextureInfoFrom" NodeType="GPU" NodeTag="NoTag" IsDynamicInputOutput="true" IsDynamicInput="true" IsDynamicOutput="false" IsDynamicParam="true">
+    <NodeGraph Comment=""/>
+    <InputOutput>
+        <Pin Name="refTexture" InputMetaData="" OutputMetaData = "" AccessType="Writable" DataType="Image2D"/>
+    </InputOutput>
+    <Input>
+        <Pin Name="format" MetaData = ""  AccessType="Readable" DataType="RCFormat"/>
+        <Pin Name="width" MetaData = "" AccessType="Readable" DataType="Int"/>
+        <Pin Name="height" MetaData = "" AccessType="Readable" DataType="Int"/>
+        <Pin Name="mipLevel" MetaData = "" AccessType="Readable" DataType="Int"/>
+        <Pin Name="layerCount" MetaData = "" AccessType="Readable" DataType="Int"/>
+    </Input>
+    <Output>
+    </Output>
+</Node>

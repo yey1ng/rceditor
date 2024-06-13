@@ -1,0 +1,52 @@
+<RCPipeline>
+    <EditorInfo ScrollX="0" ScrollY="0" Zoom="1" VisibleRectMinX="0" VisibleRectMinY="0" VisibleRectMaxX="1092" VisibleRectMaxY="941" CurNodeID="100000006"/>
+    <RCTaskLinkList/>
+    <RCTaskList>
+        <RCTaskNode NodeID="100000001" ParentNodeID="0" TemplateName="Vulkan" QueueFamily="Graphic1">
+            <EditorInfo NodeName="Vulkan" Comment="" LocationX="438" LocationY="188">
+                <StartNode NodeID="100000002" NodeName="Start" TemplateName="Start" Comment="" LocationX="0" LocationY="0"/>
+                <EndNode NodeID="100000003" NodeName="End" TemplateName="End" Comment="" LocationX="0" LocationY="0"/>
+            </EditorInfo>
+            <InputOutputList/>
+            <InputList/>
+            <OutputList/>
+            <TemplateParamList/>
+            <ParamList/>
+            <RCGraph>
+                <RCNodeLinkList/>
+                <RCNodeList>
+                    <RCNode NodeID="100000004" ParentNodeID="100000001" TemplateName="1111111111">
+                        <EditorInfo NodeName="1111111111" Comment="" LocationX="200" LocationY="168"/>
+                        <InputOutputList/>
+                        <InputList/>
+                        <OutputList/>
+                        <TemplateParamList>
+                            <Param Name="Param1" DataType="Int" Data="333" UseRef="true" RefKey="test1"/>
+                            <Param Name="Param2" DataType="Int" Data="444" UseRef="false" RefKey="test2"/>
+                        </TemplateParamList>
+                        <ParamList>
+                            <Param Name="TempParam123" DataType="Int" Data="111" UseRef="true" RefKey="test12"/>
+                            <Param Name="TempParam1" DataType="Int" Data="222" UseRef="true" RefKey="tet13"/>
+                        </ParamList>
+                    </RCNode>
+                    <RCNode NodeID="100000005" ParentNodeID="100000001" TemplateName="1111111111">
+                        <EditorInfo NodeName="1111111111" Comment="" LocationX="584" LocationY="165"/>
+                        <InputOutputList/>
+                        <InputList/>
+                        <OutputList/>
+                        <TemplateParamList>
+                            <Param Name="Param1" DataType="Int" Data="333" UseRef="true" RefKey="test1"/>
+                            <Param Name="Param2" DataType="Int" Data="444" UseRef="false" RefKey="test2"/>
+                        </TemplateParamList>
+                        <ParamList>
+                            <Param Name="TempParam123" DataType="Int" Data="111" UseRef="true" RefKey="test12"/>
+                            <Param Name="TempParam1" DataType="Int" Data="222" UseRef="true" RefKey="tet13">
+                                <MetaData Type="ColorPick" Min="0" Max="99"/>
+                            <Param/>
+                        </ParamList>
+                    </RCNode>
+                </RCNodeList>
+            </RCGraph>
+        </RCTaskNode>
+    </RCTaskList>
+</RCPipeline>

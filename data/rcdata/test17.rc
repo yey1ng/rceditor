@@ -1,0 +1,48 @@
+<RCPipeline>
+    <EditorInfo ScrollX="0" ScrollY="0" Zoom="1" VisibleRectMinX="0" VisibleRectMinY="0" VisibleRectMaxX="1092" VisibleRectMaxY="941" CurNodeID="100000005"/>
+    <RCTaskLinkList/>
+    <RCTaskList>
+        <RCTaskNode NodeID="100000001" ParentNodeID="0" TemplateName="Vulkan" QueueFamily="Graphic1">
+            <EditorInfo NodeName="Vulkan" Comment="" LocationX="566" LocationY="155">
+                <StartNode NodeID="100000002" NodeName="Start" TemplateName="Start" Comment="" LocationX="0" LocationY="0"/>
+                <EndNode NodeID="100000003" NodeName="End" TemplateName="End" Comment="" LocationX="0" LocationY="0"/>
+            </EditorInfo>
+            <InputOutputList/>
+            <InputList/>
+            <OutputList/>
+            <TemplateParamList/>
+            <ParamList/>
+            <RCGraph>
+                <RCNodeLinkList/>
+                <RCNodeList>
+                    <RCNode NodeID="100000004" ParentNodeID="100000001" TemplateName="1111111111">
+                        <EditorInfo NodeName="1111111111" Comment="" LocationX="618" LocationY="192"/>
+                        <InputOutputList/>
+                        <InputList/>
+                        <OutputList/>
+                        <TemplateParamList>
+                            <Param Name="Param3" DataType="Int" Data="88" UseRef="false" RefKey="test1"/>
+                            <Param Name="Param4" DataType="Float" Data="23.400000" UseRef="false" RefKey="test1"/>
+                            <Param Name="Param1" DataType="Vector3f" Data="0,0,0" UseRef="false" RefKey="test1"/>
+                            <Param Name="Param2" DataType="Vector4f" Data="0,0,0,0" UseRef="false" RefKey="test2"/>
+                        </TemplateParamList>
+                        <ParamList>
+                            <Param Name="TempParam4" DataType="Int" Data="567" UseRef="false" RefKey="">
+                                <MetaData WidgetType="Slider" Min="0" Max="1000"/>
+                            </Param>
+                            <Param Name="TempParam3" DataType="Float" Data="456.695007" UseRef="false" RefKey="">
+                                <MetaData WidgetType="Slider" Min="0" Max="999.90002"/>
+                            </Param>
+                            <Param Name="TempParam2" DataType="Vector3f" Data=" 0.656371,0.0760275,0.0760275" UseRef="false" RefKey="">
+                                <MetaData WidgetType="ColorPick"/>
+                            </Param>
+                            <Param Name="TempParam1" DataType="Vector4f" Data="0.0993426, 0.168533, 0.918919, 0.341176" UseRef="false" RefKey="">
+                                <MetaData WidgetType="ColorPick"/>
+                            </Param>
+                        </ParamList>
+                    </RCNode>
+                </RCNodeList>
+            </RCGraph>
+        </RCTaskNode>
+    </RCTaskList>
+</RCPipeline>

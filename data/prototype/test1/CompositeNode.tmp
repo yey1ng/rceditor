@@ -1,0 +1,3 @@
+<RCTemplateNode NodeName="CompositeNode" ClassName="" NodeType="Composite" NodeTag="Vulkan" IsDynamicInputOutput="true" IsDynamicInput="true" IsDynamicOutput="true" IsDynamicParam="false">
+    <EditorInfo Comment="" />
+</RCTemplateNode>

@@ -1,0 +1,187 @@
+<RCData>
+    <EditorInfo ScrollX="-323.1153" ScrollY="-168.4648" Zoom="0.50606388" VisibleRectMinX="-638.48718" VisibleRectMinY="-332.89236" VisibleRectMaxX="1780.1798" VisibleRectMaxY="876.44116" CurNodeID="10000009"/>
+    <LinkList>
+        <Link>
+            <OutputInfo NodeID="100000002" PinName="TempPin1"/>
+            <InputInfo NodeID="100000004" PinName="width"/>
+        </Link>
+        <Link>
+            <OutputInfo NodeID="100000002" PinName="TempPin2"/>
+            <InputInfo NodeID="100000004" PinName="height"/>
+        </Link>
+        <Link>
+            <OutputInfo NodeID="100000002" PinName="TempPin2"/>
+            <InputInfo NodeID="100000004" PinName="mipLevel"/>
+        </Link>
+        <Link>
+            <OutputInfo NodeID="100000002" PinName="TempPin3"/>
+            <InputInfo NodeID="100000004" PinName="layerCount"/>
+        </Link>
+        <Link>
+            <OutputInfo NodeID="100000005" PinName="Temp3"/>
+            <InputInfo NodeID="100000003" PinName="TempPin7"/>
+        </Link>
+        <Link>
+            <OutputInfo NodeID="100000005" PinName="Temp3"/>
+            <InputInfo NodeID="100000003" PinName="TempPin6"/>
+        </Link>
+        <Link>
+            <OutputInfo NodeID="100000005" PinName="Temp4"/>
+            <InputInfo NodeID="100000003" PinName="TempPin5"/>
+        </Link>
+        <Link>
+            <OutputInfo NodeID="100000004" PinName="Temp3"/>
+            <InputInfo NodeID="100000005" PinName="width"/>
+            <GraphLinkList>
+                <GraphLink>
+                    <OutputInfo NodeID="100000004" PinName="Temp3"/>
+                    <InputInfo NodeID="100000006" PinName="TempPin1"/>
+                </GraphLink>
+                <GraphLink>
+                    <OutputInfo NodeID="100000007" PinName="TempPin1"/>
+                    <InputInfo NodeID="100000008" PinName="TempPin5"/>
+                </GraphLink>
+                <GraphLink>
+                    <OutputInfo NodeID="100000006" PinName="TempPin5"/>
+                    <InputInfo NodeID="100000005" PinName="width"/>
+                </GraphLink>
+            </GraphLinkList>
+        </Link>
+        <Link>
+            <OutputInfo NodeID="100000004" PinName="TempPin7"/>
+            <InputInfo NodeID="100000005" PinName="mipLevel"/>
+            <GraphLinkList>
+                <GraphLink>
+                    <OutputInfo NodeID="100000004" PinName="TempPin7"/>
+                    <InputInfo NodeID="100000006" PinName="TempPin4"/>
+                </GraphLink>
+                <GraphLink>
+                    <OutputInfo NodeID="100000007" PinName="TempPin4"/>
+                    <InputInfo NodeID="100000008" PinName="TempPin7"/>
+                </GraphLink>
+                <GraphLink>
+                    <OutputInfo NodeID="100000006" PinName="TempPin7"/>
+                    <InputInfo NodeID="100000005" PinName="mipLevel"/>
+                </GraphLink>
+            </GraphLinkList>
+        </Link>
+        <Link>
+            <OutputInfo NodeID="100000004" PinName="Temp4"/>
+            <InputInfo NodeID="100000005" PinName="layerCount"/>
+            <GraphLinkList>
+                <GraphLink>
+                    <OutputInfo NodeID="100000004" PinName="Temp4"/>
+                    <InputInfo NodeID="100000006" PinName="TempPin2"/>
+                </GraphLink>
+                <GraphLink>
+                    <OutputInfo NodeID="100000007" PinName="TempPin2"/>
+                    <InputInfo NodeID="100000008" PinName="TempPin8"/>
+                </GraphLink>
+                <GraphLink>
+                    <OutputInfo NodeID="100000006" PinName="TempPin8"/>
+                    <InputInfo NodeID="100000005" PinName="layerCount"/>
+                </GraphLink>
+            </GraphLinkList>
+        </Link>
+        <Link>
+            <OutputInfo NodeID="100000004" PinName="Temp4"/>
+            <InputInfo NodeID="100000005" PinName="height"/>
+            <GraphLinkList>
+                <GraphLink>
+                    <OutputInfo NodeID="100000004" PinName="Temp4"/>
+                    <InputInfo NodeID="100000006" PinName="TempPin3"/>
+                </GraphLink>
+                <GraphLink>
+                    <OutputInfo NodeID="100000007" PinName="TempPin3"/>
+                    <InputInfo NodeID="100000008" PinName="TempPin9"/>
+                </GraphLink>
+                <GraphLink>
+                    <OutputInfo NodeID="100000006" PinName="TempPin9"/>
+                    <InputInfo NodeID="100000005" PinName="height"/>
+                </GraphLink>
+            </GraphLinkList>
+        </Link>
+        <Link>
+            <OutputInfo NodeID="100000004" PinName="TempPin7"/>
+            <InputInfo NodeID="100000008" PinName="TempPin6"/>
+            <GraphLinkList>
+                <GraphLink>
+                    <OutputInfo NodeID="100000004" PinName="TempPin7"/>
+                    <InputInfo NodeID="100000006" PinName="TempPin4"/>
+                </GraphLink>
+                <GraphLink>
+                    <OutputInfo NodeID="100000007" PinName="TempPin4"/>
+                    <InputInfo NodeID="100000008" PinName="TempPin6"/>
+                </GraphLink>
+            </GraphLinkList>
+        </Link>
+        <Link>
+            <OutputInfo NodeID="100000005" PinName="TempPin5"/>
+            <InputInfo NodeID="100000003" PinName="TempPin8"/>
+        </Link>
+    </LinkList>
+    <NodeList>
+        <Node NodeID="100000001" ParentNodeID="0" TemplateName="CommandBuffer">
+            <NodeGraph NodeName="CommandBuffer" Comment="" LocationX="327" LocationY="142" GroupSizeX="0" GroupSizeY="0">
+                <StartNode NodeID="100000002" NodeName="Start" TemplateName="Start" Comment="" LocationX="-310" LocationY="44" GroupSizeX="0" GroupSizeY="0"/>
+                <EndNode NodeID="100000003" NodeName="End" TemplateName="End" Comment="" LocationX="1128" LocationY="168" GroupSizeX="0" GroupSizeY="0"/>
+            </NodeGraph>
+            <InputOutput/>
+            <Input>
+                <Pin Name="TempPin1" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="TempPin2" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="TempPin3" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="TempPin4" MetaData="" DataType="Int" AccessType="Readable"/>
+            </Input>
+            <Output>
+                <Pin Name="TempPin5" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="TempPin6" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="TempPin7" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="TempPin8" MetaData="" DataType="Int" AccessType="Readable"/>
+            </Output>
+            <ParamList>
+                <Param Name="Queue" DataType="TaskQueueFamily" Data="Compute" UseRef="false" RefKey=""/>
+                <Param Name="QueueIndex" DataType="Int" Data="0" UseRef="false" RefKey=""/>
+            </ParamList>
+        </Node>
+        <Node NodeID="100000004" ParentNodeID="100000001" TemplateName="1111111111">
+            <NodeGraph NodeName="1111111111" Comment="" LocationX="-72" LocationY="36" GroupSizeX="0" GroupSizeY="0"/>
+            <InputOutput>
+                <Pin Name="TempPin7" InputMetaData="" OutputMetaData="" DataType="Int" AccessType="Readable"/>
+            </InputOutput>
+            <Input/>
+            <Output/>
+            <ParamList/>
+        </Node>
+        <Node NodeID="100000005" ParentNodeID="100000001" TemplateName="1111111111">
+            <NodeGraph NodeName="1111111111" Comment="" LocationX="706" LocationY="16" GroupSizeX="0" GroupSizeY="0"/>
+            <InputOutput>
+                <Pin Name="TempPin5" InputMetaData="" OutputMetaData="" DataType="Int" AccessType="Readable"/>
+            </InputOutput>
+            <Input/>
+            <Output/>
+            <ParamList/>
+        </Node>
+        <Node NodeID="100000006" ParentNodeID="100000001" TemplateName="CompositeNode">
+            <NodeGraph NodeName="CompositeNode" Comment="" LocationX="308" LocationY="-24" GroupSizeX="0" GroupSizeY="0">
+                <StartNode NodeID="100000007" NodeName="Start" TemplateName="Start" Comment="" LocationX="-38" LocationY="156" GroupSizeX="0" GroupSizeY="0"/>
+                <EndNode NodeID="100000008" NodeName="End" TemplateName="End" Comment="" LocationX="568" LocationY="60" GroupSizeX="0" GroupSizeY="0"/>
+            </NodeGraph>
+            <InputOutput/>
+            <Input>
+                <Pin Name="TempPin1" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="TempPin2" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="TempPin3" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="TempPin4" MetaData="" DataType="Int" AccessType="Readable"/>
+            </Input>
+            <Output>
+                <Pin Name="TempPin5" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="TempPin6" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="TempPin7" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="TempPin8" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Pin Name="TempPin9" MetaData="" DataType="Int" AccessType="Readable"/>
+            </Output>
+            <ParamList/>
+        </Node>
+    </NodeList>
+</RCData>

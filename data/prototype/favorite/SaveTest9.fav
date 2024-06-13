@@ -1,0 +1,26 @@
+<RCFavoriteNode NodeName="SaveTest9" TemplateName="1111111111" NodeType="GPU">
+    <EditorInfo Comment=""/>
+    <InputOutputList/>
+    <InputList/>
+    <OutputList/>
+    <TemplateParamList>
+        <Param Name="Param3" DataType="Int" Data="88" UseRef="false" RefKey="test1"/>
+        <Param Name="Param4" DataType="Float" Data="23.400000" UseRef="false" RefKey="test1"/>
+        <Param Name="Param1" DataType="Vector3f" Data="0,0,0" UseRef="false" RefKey="test1"/>
+        <Param Name="Param2" DataType="Vector4f" Data="0,0,0,0" UseRef="false" RefKey="test2"/>
+    </TemplateParamList>
+    <ParamList>
+        <Param Name="TempParam4" DataType="Int" Data="567" UseRef="false" RefKey="">
+            <MetaData WidgetType="Slider" Min="0" Max="1000"/>
+        </Param>
+        <Param Name="TempParam3" DataType="Float" Data="456.695007" UseRef="false" RefKey="">
+            <MetaData WidgetType="Slider" Min="0" Max="999.90002"/>
+        </Param>
+        <Param Name="TempParam2" DataType="Vector3f" Data=" 0.656371,0.0760275,0.0760275" UseRef="false" RefKey="">
+            <MetaData WidgetType="ColorPick"/>
+        </Param>
+        <Param Name="TempParam1" DataType="Vector4f" Data="0.0993426, 0.168533, 0.918919, 0.341176" UseRef="false" RefKey="">
+            <MetaData WidgetType="ColorPick"/>
+        </Param>
+    </ParamList>
+</RCFavoriteNode>

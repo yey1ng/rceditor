@@ -1,0 +1,16 @@
+<RCTemplateNode NodeName="GetTextureInfoFrom11" ClassName="GetTextureInfoFrom" NodeType="GPU" NodeTag="Vulkan" IsDynamicInputOutput="true" IsDynamicInput="true" IsDynamicOutput="true" IsDynamicParam="true">
+    <EditorInfo Comment=""/>
+    <InputOutputList>
+        <InputOutput Name="refTexture" InputMetaData="" OutputMetaData = "" AccessType="Writable" DataType="Image2D"/>
+    </InputOutputList>
+    <InputList>
+        <Input Name="format" MetaData = ""  AccessType="Readable" DataType="RCFormat"/>
+        <Input Name="width" MetaData = "" AccessType="Readable" DataType="Int"/>
+        <Input Name="height" MetaData = "" AccessType="Readable" DataType="Int"/>
+        <Input Name="mipLevel" MetaData = "" AccessType="Readable" DataType="Int"/>
+        <Input Name="layerCount" MetaData = "" AccessType="Readable" DataType="Int"/>
+    </InputList>
+    <OutputList>        
+        <Output Name="layerCount" MetaData = "" AccessType="Readable" DataType="Int"/>
+    </OutputList>
+</RCTemplateNode>

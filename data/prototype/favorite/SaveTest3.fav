@@ -1,0 +1,93 @@
+<RCFavoriteNode NodeName="SaveTest3" TemplateName="CompositeNode" NodeType="Composite">
+    <EditorInfo Comment="">
+        <StartNode RelativeNodeID="1" NodeName="Start" TemplateName="Start" Comment="" LocationX="10" LocationY="236"/>
+        <EndNode RelativeNodeID="2" NodeName="End" TemplateName="End" Comment="" LocationX="744" LocationY="332"/>
+    </EditorInfo>
+    <InputOutputList/>
+    <InputList>
+        <Input Name="TempPin1" MetaData="" DataType="Int" AccessType="Readable"/>
+        <Input Name="TempPin2" MetaData="" DataType="Int" AccessType="Readable"/>
+    </InputList>
+    <OutputList>
+        <Output Name="TempPin3" MetaData="" DataType="Int" AccessType="Readable"/>
+        <Output Name="TempPin4" MetaData="" DataType="Int" AccessType="Readable"/>
+    </OutputList>
+    <ParamList/>
+    <RCNodeList>
+        <RCFavoriteNode RelativeNodeID="3" NodeName="CompositeNode" TemplateName="CompositeNode" NodeType="Composite" LocationX="264" LocationY="220">
+            <EditorInfo Comment="">
+                <StartNode RelativeNodeID="4" NodeName="Start" TemplateName="Start" Comment="" LocationX="106" LocationY="264"/>
+                <EndNode RelativeNodeID="5" NodeName="End" TemplateName="End" Comment="" LocationX="744" LocationY="336"/>
+            </EditorInfo>
+            <InputOutputList/>
+            <InputList>
+                <Input Name="TempPin1" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Input Name="TempPin2" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Input Name="TempPin3" MetaData="" DataType="Int" AccessType="Readable"/>
+            </InputList>
+            <OutputList>
+                <Output Name="TempPin4" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Output Name="TempPin5" MetaData="" DataType="Int" AccessType="Readable"/>
+                <Output Name="TempPin6" MetaData="" DataType="Int" AccessType="Readable"/>
+            </OutputList>
+            <ParamList/>
+            <RCNodeList>
+                <RCFavoriteNode RelativeNodeID="6" NodeName="1111111111" TemplateName="1111111111" NodeType="GPU" LocationX="294" LocationY="133">
+                    <EditorInfo Comment=""/>
+                    <InputOutputList/>
+                    <InputList/>
+                    <OutputList/>
+                    <ParamList/>
+                </RCFavoriteNode>
+            </RCNodeList>
+            <RCNodeLinkList>
+                <Link>
+                    <Producer NodeID="4" PinName="TempPin1"/>
+                    <Consumer NodeID="6" PinName="height"/>
+                </Link>
+                <Link>
+                    <Producer NodeID="4" PinName="TempPin2"/>
+                    <Consumer NodeID="6" PinName="mipLevel"/>
+                </Link>
+                <Link>
+                    <Producer NodeID="4" PinName="TempPin2"/>
+                    <Consumer NodeID="6" PinName="layerCount"/>
+                </Link>
+                <Link>
+                    <Producer NodeID="4" PinName="TempPin3"/>
+                    <Consumer NodeID="6" PinName="width"/>
+                </Link>
+                <Link>
+                    <Producer NodeID="6" PinName="Temp3"/>
+                    <Consumer NodeID="5" PinName="TempPin4"/>
+                </Link>
+                <Link>
+                    <Producer NodeID="6" PinName="Temp4"/>
+                    <Consumer NodeID="5" PinName="TempPin6"/>
+                </Link>
+            </RCNodeLinkList>
+        </RCFavoriteNode>
+    </RCNodeList>
+    <RCNodeLinkList>
+        <Link>
+            <Producer NodeID="1" PinName="TempPin1"/>
+            <Consumer NodeID="3" PinName="TempPin1"/>
+        </Link>
+        <Link>
+            <Producer NodeID="1" PinName="TempPin2"/>
+            <Consumer NodeID="3" PinName="TempPin3"/>
+        </Link>
+        <Link>
+            <Producer NodeID="1" PinName="TempPin1"/>
+            <Consumer NodeID="3" PinName="TempPin2"/>
+        </Link>
+        <Link>
+            <Producer NodeID="3" PinName="TempPin4"/>
+            <Consumer NodeID="2" PinName="TempPin3"/>
+        </Link>
+        <Link>
+            <Producer NodeID="3" PinName="TempPin6"/>
+            <Consumer NodeID="2" PinName="TempPin4"/>
+        </Link>
+    </RCNodeLinkList>
+</RCFavoriteNode>

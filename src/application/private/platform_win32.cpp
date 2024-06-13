@@ -138,10 +138,10 @@ bool PlatformWin32::OpenMainWindow(const char* title, int width, int height)
     m_MainWindowHandle = CreateWindow(
         m_WindowClass.lpszClassName,
         Utf8ToNative(title).c_str(),
-        WS_OVERLAPPEDWINDOW,
+        WS_OVERLAPPEDWINDOW | WS_MAXIMIZEBOX,
         CW_USEDEFAULT, CW_USEDEFAULT,
-        width < 0 ? CW_USEDEFAULT : width,
-        height < 0 ? CW_USEDEFAULT : height,
+        width < 0 ? GetSystemMetrics(SM_CXSCREEN) : width,
+        height < 0 ? GetSystemMetrics(SM_CXSCREEN) : height,
         nullptr, nullptr, m_WindowClass.hInstance, nullptr);
 
     if (!m_MainWindowHandle)

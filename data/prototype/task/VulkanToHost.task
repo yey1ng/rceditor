@@ -1,0 +1,3 @@
+<RCTaskNode NodeName="VulkanToHost" ClassName="" NodeType="Task" NodeTag="Host|Vulkan|Block" QueueFamily="Block" IsDynamicInputOutput="false" IsDynamicInput="true" IsDynamicOutput="true" IsDynamicParam="true">
+    <NodeGraph Comment=""/>
+</RCTaskNode>

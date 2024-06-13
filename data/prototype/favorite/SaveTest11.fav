@@ -1,0 +1,41 @@
+<RCFavoriteNode NodeName="SaveTest11" TemplateName="1111111111" NodeType="GPU">
+    <EditorInfo Comment=""/>
+    <InputOutputList/>
+    <InputList/>
+    <OutputList/>
+    <TemplateParamList>
+        <Param Name="Param3" DataType="Int" Data="88" UseRef="false" RefKey="test1"/>
+        <Param Name="Param4" DataType="Float" Data="23.400000" UseRef="false" RefKey="test1"/>
+        <Param Name="Param1" DataType="Vector3f" Data="0,0,0" UseRef="false" RefKey="test1"/>
+        <Param Name="Param2" DataType="Vector4f" Data="0,0,0,0" UseRef="false" RefKey="test2"/>
+    </TemplateParamList>
+    <ParamList>
+        <Param Name="TempParam" DataType="Int" Data="632" UseRef="false" RefKey="">
+            <MetaData WidgetType="Slider" Min="0" Max="1000"/>
+        </Param>
+        <Param Name="TempParam1" DataType="Float" Data="66.160004" UseRef="false" RefKey="">
+            <MetaData WidgetType="Slider" Min="0" Max="66.160004"/>
+        </Param>
+        <Param Name="TempParam2" DataType="Vector2f" Data="100.01, 77.34" UseRef="false" RefKey="">
+            <MetaData WidgetType="Slider"/>
+        </Param>
+        <Param Name="TempParam3" DataType="Vector3f" Data="0.760618,0.240813,0.240813" UseRef="false" RefKey="">
+            <MetaData WidgetType="ColorPick"/>
+        </Param>
+        <Param Name="TempParam4" DataType="Vector4f" Data="0.0366782, 0.176471,  0.11562, 0.376471" UseRef="false" RefKey="">
+            <MetaData WidgetType="ColorPick"/>
+        </Param>
+        <Param Name="TempParam5" DataType="Matrix3f" Data="1,0,0,0,1,0,0,0,1" UseRef="false" RefKey="">
+        </Param>
+        <Param Name="TempParam6" DataType="Matrix4f" Data="1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1" UseRef="false" RefKey="">
+        </Param>
+        <Param Name="TempParam7" DataType="String" Data="prototype\test2\GetTextureInfoFrom2.xml" UseRef="false" RefKey="">
+            <MetaData WidgetType="File"/>
+        </Param>
+        <Param Name="TempParam8" DataType="String" Data="prototype\task" UseRef="false" RefKey="">
+            <MetaData WidgetType="Dir"/>
+        </Param>
+        <Param Name="TempParam9" DataType="Matrix3f" Data="1,0,0,0,1,0,0,0,1" UseRef="false" RefKey="">
+        </Param>
+    </ParamList>
+</RCFavoriteNode>

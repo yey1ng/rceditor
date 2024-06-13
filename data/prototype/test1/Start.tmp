@@ -1,0 +1,3 @@
+<RCTemplateNode NodeName="Start"  ClassName="" NodeType="Start" NodeTag="Vulkan|Host" IsDynamicInputOutput="false" IsDynamicInput="false" IsDynamicOutput="true" IsDynamicParam="false">
+    <EditorInfo Comment=""/>
+</RCTemplateNode>
